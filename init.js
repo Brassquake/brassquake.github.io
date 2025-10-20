@@ -105,8 +105,8 @@ let performances = [
         ],
         videos: [
             {
-                title: "Bolero - David Marlatt",
-                url: "https://www.youtube.com/embed/Cti8e4lQblw?si=6z6wYIRd0vkanALu"
+                title: "Veggie Tales Theme",
+                url: "https://youtu.be/zbb5xbJCJg4"
             },
         ]
     },  

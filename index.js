@@ -171,10 +171,18 @@ document.addEventListener('DOMContentLoaded', () => {
   siteNav.style.background = 'rgba(0,0,0,0)';
   siteNav.style.boxShadow = '0 4px 20px rgba(0,0,0,0.0)';
 
-      closeTimer = setTimeout(() => {
-        headerEl.classList.remove('nav-open');
-        menuButton.setAttribute('aria-expanded', 'false');
+  // Immediately update the header state so the icon reverts right away while the
+  // overlay continues its collapse animation. Add a 'nav-closing' class so
+  // the CSS keeps the overlay visible while it collapses back toward the
+  // menu button. Accessibility state (aria-hidden) and focus will be restored
+  // after the visual animation completes below.
+  headerEl.classList.add('nav-closing');
+  if (headerEl.classList.contains('nav-open')) {
+    headerEl.classList.remove('nav-open');
+  }
+  menuButton.setAttribute('aria-expanded', 'false');
 
+      closeTimer = setTimeout(() => {
         // clear inline styles so CSS returns to base state
         links.forEach(a => {
           a.style.transitionDelay = '';
@@ -183,16 +191,19 @@ document.addEventListener('DOMContentLoaded', () => {
           a.style.transition = '';
         });
 
-        // clear our inline transition override as well
-        siteNav.style.transition = '';
+  // clear our inline transition override as well
+  siteNav.style.transition = '';
         // also clear any inline overlay collapse styles so the nav returns to stylesheet control
         siteNav.style.transform = '';
         siteNav.style.opacity = '';
         siteNav.style.background = '';
         siteNav.style.boxShadow = '';
 
-        // accessibility: restore main content visibility to assistive tech
-        setMainAriaHidden(false);
+  // accessibility: restore main content visibility to assistive tech
+  setMainAriaHidden(false);
+
+  // remove the temporary closing class so CSS returns to the base collapsed state
+  headerEl.classList.remove('nav-closing');
 
         // restore focus
         if (previousFocus && typeof previousFocus.focus === 'function') {

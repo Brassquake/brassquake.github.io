@@ -155,11 +155,30 @@ header {
     color: #fff;
     border: none;
     padding: 6px 10px;
-    font-size: 1.2rem;
+    /* ensure no textual glyphs show inside the button (fix stray dashes)
+       bars are drawn with pseudo elements/spans, so collapse font rendering */
+    font-size: 0; /* hide any accidental text nodes */
+    line-height: 0;
     border-radius: 6px;
     cursor: pointer;
     z-index: 10001; /* keep above the fixed overlay */
 }
+
+/* Hamburger bars */
+.menu-button { width: 44px; height: 44px; display:flex; align-items:center; justify-content:center; padding:6px; }
+.menu-icon { display:block; width:24px; height:24px; }
+.menu-icon .bar {
+    fill: #fff;
+    transition: transform 300ms cubic-bezier(.2,.8,.2,1), opacity 300ms ease, fill 150ms ease;
+    /* ensure SVG transforms pivot at the rect center for a symmetric X */
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+/* Morph into a centered X when menu open (target the SVG rects) */
+header.nav-open .menu-icon .bar1 { transform: translateY(5px) rotate(45deg); }
+header.nav-open .menu-icon .bar2 { opacity: 0; transform: scaleX(0); }
+header.nav-open .menu-icon .bar3 { transform: translateY(-5px) rotate(-45deg); }
 
 /* The compact/overlay nav behavior applies only on narrower screens; on desktop the nav remains visible */
 

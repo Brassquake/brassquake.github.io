@@ -81,17 +81,125 @@ document.addEventListener('DOMContentLoaded', () => {
     // start in compact mode on small screens
     siteNav.classList.add('compact');
 
-    menuButton.addEventListener('click', () => {
-      const open = headerEl.classList.toggle('nav-open');
-      menuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
+    // helper state
+    let closeTimer = null;
 
-    // Close menu when any nav link is clicked (also navigate normally)
-    siteNav.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => {
+    const links = Array.from(siteNav.querySelectorAll('a'));
+  const linkStagger = 40; // ms per link
+  const transformDuration = 500; // set open/close to 500ms
+
+    function openMenu() {
+      // clear any pending close
+      if (closeTimer) {
+        clearTimeout(closeTimer);
+        closeTimer = null;
+      }
+      // reset any inline transition overrides so CSS defaults apply
+      siteNav.style.transition = '';
+
+  // ensure any inline collapse styles are cleared so CSS open animation runs
+  siteNav.style.transform = '';
+  siteNav.style.opacity = '';
+  siteNav.style.background = '';
+  siteNav.style.boxShadow = '';
+
+  headerEl.classList.add('nav-open');
+      menuButton.setAttribute('aria-expanded', 'true');
+
+      // ensure links are visible and arranged (forward stagger left-to-right)
+      links.forEach((a, i) => {
+        // clear any inline transition overrides from previous close
+        a.style.transition = '';
+        a.style.transitionDelay = `${i * linkStagger}ms`;
+        a.style.transform = `translateX(0)`;
+        a.style.opacity = '1';
+      });
+    }
+
+    function closeMenu() {
+      // compute menu button center
+      const menuRect = menuButton.getBoundingClientRect();
+      const menuCenterX = menuRect.left + menuRect.width / 2;
+
+      // compute link centers and sort right-to-left so they flow back into the button
+      const linksWithPos = links.map(a => {
+        const r = a.getBoundingClientRect();
+        return { el: a, cx: r.left + r.width / 2 };
+      }).sort((a, b) => b.cx - a.cx); // rightmost first
+
+      // apply staggered delays in right-to-left order and move each link toward the menu button
+      linksWithPos.forEach((item, idx) => {
+        const dx = Math.round(menuCenterX - item.cx);
+        // during close, increase link transition duration to match transformDuration so the motion is slower
+        item.el.style.transition = `opacity ${transformDuration}ms ease, transform ${transformDuration}ms ease`;
+        item.el.style.transitionDelay = `${idx * linkStagger}ms`;
+        item.el.style.transform = `translateX(${dx}px)`;
+        item.el.style.opacity = '0';
+      });
+
+      // after the last link's delay + transform duration, hide the overlay and clear inline styles
+      const maxDelay = (linksWithPos.length - 1) * linkStagger;
+      const totalCloseTime = maxDelay + transformDuration;
+
+  // override siteNav transitions so the overlay collapse spans the full close time
+  siteNav.style.transition = `opacity ${totalCloseTime}ms cubic-bezier(.2,.8,.2,1), transform ${totalCloseTime}ms cubic-bezier(.2,.8,.2,1), background ${Math.min(totalCloseTime, 320)}ms ease, box-shadow ${Math.min(totalCloseTime, 320)}ms ease`;
+
+  // start the overlay collapse by setting inline styles (inline styles take precedence
+  // and will animate using the transition we just set). This keeps the overlay visible
+  // while links are animating into the button.
+  // collapsed state: slightly offset and scaled to zero
+  siteNav.style.transform = 'translateX(-8px) scaleX(0)';
+  siteNav.style.opacity = '0';
+  siteNav.style.background = 'rgba(0,0,0,0)';
+  siteNav.style.boxShadow = '0 4px 20px rgba(0,0,0,0.0)';
+
+      closeTimer = setTimeout(() => {
         headerEl.classList.remove('nav-open');
         menuButton.setAttribute('aria-expanded', 'false');
+
+        // clear inline styles so CSS returns to base state
+        links.forEach(a => {
+          a.style.transitionDelay = '';
+          a.style.transform = '';
+          a.style.opacity = '';
+          a.style.transition = '';
+        });
+
+        // clear our inline transition override as well
+        siteNav.style.transition = '';
+        // also clear any inline overlay collapse styles so the nav returns to stylesheet control
+        siteNav.style.transform = '';
+        siteNav.style.opacity = '';
+        siteNav.style.background = '';
+        siteNav.style.boxShadow = '';
+
+        closeTimer = null;
+      }, totalCloseTime + 20);
+    }
+
+    menuButton.addEventListener('click', () => {
+      if (headerEl.classList.contains('nav-open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    // Close menu when any nav link is clicked (animate links back into the menu button)
+    links.forEach(a => {
+      a.addEventListener('click', (e) => {
+        // allow link navigation but animate close first; small delay before navigation will keep UX smooth
+        closeMenu();
       });
+    });
+
+    // Close with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        if (headerEl.classList.contains('nav-open')) {
+          closeMenu();
+        }
+      }
     });
   }
 });

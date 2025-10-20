@@ -90,6 +90,17 @@ button:hover {
     height: auto;
 }
 
+/* Home section image */
+.home-image {
+    display: inline-block;
+    max-width: 70%; /* slightly smaller than full width */
+    height: auto;
+    border: 4px solid transparent;
+    background: linear-gradient(45deg, #ffd700, #ff6b35) border-box;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
 .captioned-image .caption {
     margin-top: 0.25rem;
     color: #ddd;

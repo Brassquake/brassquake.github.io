@@ -9,17 +9,19 @@
     <link rel="stylesheet" href="styles.css">
 </head> 
 <body class="home">
+    <a class="skip-link" href="#page" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;" onfocus="this.style.left='12px';this.style.top='12px';this.style.width='auto';this.style.height='auto';">Skip to content</a>
     <!-- Animated background -->
     <div class="music-notes"></div>
-    <header>
+    <header role="banner">
         <button id="menu-toggle" class="menu-button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">☰</button>
-        <nav id="site-nav" class="compact">
+        <!-- nav is NOT compact by default so it works without JavaScript; JS will add the compact behavior on load -->
+        <nav id="site-nav" role="navigation" aria-label="Primary navigation">
             <ul>
-                <li><a href="#" onclick="changePage('page=home')">Home</a></li>
-                <li><a href="#" onclick="changePage('page=about')">About</a></li>
-                <li><a href="#" onclick="changePage('page=members')">Members</a></li>
-                <li><a href="#" onclick="changePage('page=performances')">Performances</a></li>
-                <li><a href="#" onclick="changePage('page=contact')">Contact</a></li>
+                <li><a href="?page=home" onclick="changePage('page=home'); return false;">Home</a></li>
+                <li><a href="?page=about" onclick="changePage('page=about'); return false;">About</a></li>
+                <li><a href="?page=members" onclick="changePage('page=members'); return false;">Members</a></li>
+                <li><a href="?page=performances" onclick="changePage('page=performances'); return false;">Performances</a></li>
+                <li><a href="?page=contact" onclick="changePage('page=contact'); return false;">Contact</a></li>
             </ul>
         </nav>
         <div class="logo-wrapper">
@@ -102,7 +104,7 @@
               <div class="contact-container">
                 <div class="contact-grid">
                   <!-- Left: Contact Form -->
-                  <form id="contact-form">
+                  <form id="contact-form" action="https://formspree.io/f/xblzywbj" method="POST">
                     <div class="form-group">
                       <label for="name">Name:</label>
                       <input type="text" id="name" name="name" required>
@@ -146,6 +148,14 @@
         // Set current year in footer
         document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
+
+    <!-- If JavaScript is disabled, ensure nav is visible and the menu button is hidden -->
+    <noscript>
+        <style>
+            #site-nav { visibility: visible !important; opacity: 1 !important; position: static !important; transform: none !important; }
+            .menu-button { display: none !important; }
+        </style>
+    </noscript>
 
     <!-- Initialization -->
     <script src="init.js"></script>

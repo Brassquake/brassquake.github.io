@@ -88,6 +88,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const linkStagger = 40; // ms per link
   const transformDuration = 500; // set open/close to 500ms
 
+    // detect reduced-motion preference
+    const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function setMainAriaHidden(hidden) {
+      const main = document.querySelector('main');
+      if (main) main.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+    }
+
+    // Focus management: remember prior focus and focus first nav link on open
+    let previousFocus = null;
+
     function openMenu() {
       // clear any pending close
       if (closeTimer) {
@@ -105,6 +116,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   headerEl.classList.add('nav-open');
       menuButton.setAttribute('aria-expanded', 'true');
+
+  // accessibility: hide main content from assistive tech while menu is open
+  setMainAriaHidden(true);
+
+  // focus trap: move focus to first link
+  previousFocus = document.activeElement;
+  if (links[0]) links[0].focus();
 
       // ensure links are visible and arranged (forward stagger left-to-right)
       links.forEach((a, i) => {
@@ -172,6 +190,14 @@ document.addEventListener('DOMContentLoaded', () => {
         siteNav.style.opacity = '';
         siteNav.style.background = '';
         siteNav.style.boxShadow = '';
+
+        // accessibility: restore main content visibility to assistive tech
+        setMainAriaHidden(false);
+
+        // restore focus
+        if (previousFocus && typeof previousFocus.focus === 'function') {
+          previousFocus.focus();
+        }
 
         closeTimer = null;
       }, totalCloseTime + 20);

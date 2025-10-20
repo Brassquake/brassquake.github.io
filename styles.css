@@ -11,6 +11,29 @@ html {
     color: #f0f0f0;
 }
 
+/* Accessibility: skip-link visible on focus */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    background: #000;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 6px;
+    z-index: 10010;
+}
+
+/* Respect user preference for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
 body {
     font-family: 'Arial', sans-serif;
     background: linear-gradient(to bottom, #2b1b3f 0%, #4c2a6a 50%, #6a3f8c 100%);
@@ -178,6 +201,53 @@ header {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     animation: pulse 2s ease-in-out infinite;
     transition: font-size 0.3s ease;
+}
+
+/* Responsive typography and layout helpers */
+html { font-size: 16px; }
+@media (max-width: 1200px) { html { font-size: 15px; } }
+@media (max-width: 900px) { html { font-size: 14px; } }
+@media (max-width: 480px) { html { font-size: 13px; } }
+
+/* Member detail responsive layout */
+.member-detail-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    align-items: start;
+}
+.member-detail-image img.member-image {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+.member-detail-desc {
+    text-align: left;
+}
+
+/* Performance media grid */
+.performance-media-wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
+.performance-media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; align-items: start; }
+.member-detailed-description .media-item { display: flex; flex-direction: column; }
+
+/* Make images and iframes responsive */
+.member-detailed-description .media-img,
+.member-detailed-description .media-frame { width: 100%; height: auto; max-height: 420px; object-fit: cover; }
+
+/* Responsive nav adjustments */
+nav ul { padding: 0.5rem; }
+nav a { padding: 12px 18px; }
+
+@media (max-width: 900px) {
+    .member-card { width: 90%; }
+    .member-detail-layout { grid-template-columns: 1fr; }
+    .logo { font-size: 2.5rem; }
+}
+
+@media (max-width: 480px) {
+    nav a { padding: 10px 12px; font-size: 0.95rem; }
+    .member-detailed-description .media-img, .member-detailed-description .media-frame { max-height: 260px; }
+    .member-detail-layout { gap: 0.75rem; }
 }
 
 .logo.small {

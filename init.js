@@ -113,7 +113,7 @@ let performances = [
     {
         date: "July 26th, 2025",
         location: "Aurora Town Square",
-        summary: "Outdoor concert for a live audience. Playing over 30 minutes of repertoire, the people of Aurora greatly enjoyed the band!",
+        summary: "Outdoor live concert for the people of Aurora at the Aurora Town Square!",
         details: "Outdoor concert for a live audience. Playing over 30 minutes of repertoire, the people of Aurora greatly enjoyed the band! Yes indeed we did!",
         status: "past",
         videos: [
@@ -131,7 +131,7 @@ let performances = [
     {
         date: "May 30th, 2025",
         location: "Dr. G.W. Williams Secondary School",
-        summary: "Performance for many past graduates of G.W. as a celebration of the school move. Over an hour of repertoire, the alumni had a great time!",
+        summary: "End-of-year alumni performance before our school moves locations!",
         details: "Performance for many past graduates of G.W. as a celebration of the school move. Over an hour of repertoire, the alumni had a great time! They did indeed!",
         status: "past",
         photos: [
@@ -186,11 +186,11 @@ function memberDetails() {
                     <h2>${cards[i].name}</h2>
                     <div class="member-instrument">${cards[i].instrument}</div>
                     <br>
-                    <div style="display: flex; flex-direction: row; gap: 20px; align-items: center;">
-                        <div class="image-container" style="width: 50%; text-align: center; margin: 0 100px;">
-                            <img class="member-image" src="images/${cards[i].img}" alt="${cards[i].name}" style="width: 100%; height: auto;">
+                    <div class="member-detail-layout">
+                        <div class="image-container member-detail-image">
+                            <img class="member-image" src="images/${cards[i].img}" alt="${cards[i].name}">
                         </div>
-                        <div class="member-detailed-description"style="width: 50%; text-align: left; display: flex; flex-direction: column; align-items: center;">
+                        <div class="member-detailed-description member-detail-desc">
                             <p>${cards[i].detailedDesc}</p>
                         </div>
                     </div>
@@ -235,8 +235,8 @@ function performanceDetails() {
                 </div>
         
                 <!-- Move media outside of .member-detail -->
-                <div style="width: 100%; max-width: 1300px; margin: 0 auto;">
-                    <div class="member-detailed-description" style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; align-items: flex-start;">
+                <div class="performance-media-wrap">
+                    <div class="member-detailed-description performance-media-grid">
                         ${(perf.videos && perf.videos.length > 0
                             ? perf.videos.map(video => `
                                 <div class="media-item">

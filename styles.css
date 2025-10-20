@@ -22,7 +22,8 @@ body {
 }
 
 body.home header {
-    padding: 0 0 100px;
+    /* make the purple block behind the logo short (0.75rem) */
+    padding: 0 0 0.75rem;
 }
 
 hr {
@@ -54,8 +55,23 @@ button:hover {
 
 .captioned-image {
     text-align: center;
-    margin: 100px;
+    /* much smaller margin so the photo description doesn't sit far from surrounding text */
+    margin: 2rem 0;
     font-style: italic;
+}
+
+.captioned-image img {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    max-width: 100%;
+    height: auto;
+}
+
+.captioned-image .caption {
+    margin-top: 0.25rem;
+    color: #ddd;
+    font-size: 1rem; /* slightly larger */
+    font-weight: 500; /* a tad bolder for readability */
 }
 
 .member-image {
@@ -90,22 +106,50 @@ button:hover {
 /* Header */
 header {
     text-align: center;
-    padding: 0 0 100px;
-    background: linear-gradient(to bottom, #4c2a6a 100%, #2b1b3f 0%);
-    backdrop-filter: blur(10px);
+    /* stacked layout: nav on top, logo centered below */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    /* increase top padding so logo has more room above it */
+    padding: 3rem 0 0.75rem;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    position: relative;
     top: 0;
     z-index: 100;
+    min-height: 3.5rem; /* ensure space for menu button */
 }
+
+/* Menu button (compact) */
+.menu-button {
+    display: block; /* visible on desktop too */
+    position: absolute;
+    left: 1rem;
+    top: 0.6rem;
+    background: rgba(0,0,0,0.35);
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    font-size: 1.2rem;
+    border-radius: 6px;
+    cursor: pointer;
+    z-index: 10001; /* keep above the fixed overlay */
+}
+
+/* The compact/overlay nav behavior applies only on narrower screens; on desktop the nav remains visible */
 
 /* Logo wrapper */
 .logo-wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 1rem;
-    padding: 1rem;
-    gap: 0.5rem; /* Add spacing between logo, image, and subtitle */
-    position: relative;
+    /* tighten spacing so content fits in a very short header */
+    /* push the logo further down so it isn't too close to the top */
+    margin-top: 1.25rem;
+    padding: 0.5rem 0;
+    gap: 0.25rem; /* Add spacing between logo, image, and subtitle */
     z-index: 10;
 }
 
@@ -113,7 +157,7 @@ header {
 .logo-image {
     width: 140px;
     height: auto;
-    margin-bottom: 1rem;
+    margin-bottom: 0.1rem;
     transition: width 0.3s ease;
     filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.4)); /* soft yellow glow */
 }
@@ -161,7 +205,9 @@ header {
 nav {
     background: rgba(0, 0, 0, 0.5);
     padding: 0px;
-    margin: 0 0 50px;
+    margin: 0 0 0.5rem;
+    width: 100%;
+    z-index: 150;
 }
 
 nav ul {
@@ -496,6 +542,107 @@ button[type="submit"]:hover {
     background-color: rgba(0, 0, 0, 0.2);
 }
 
+/* Performance media layout: make videos match photo sizes */
+.member-detailed-description .media-item {
+    flex: 0 1 600px; /* allow wrapping but prefer 600px */
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.member-detailed-description .media-img,
+.member-detailed-description .media-frame {
+    width: 100%;
+    height: 350px; /* fixed height to match photos and videos */
+    object-fit: cover; /* for images */
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Make iframe behave like an image (remove default border styles) */
+.member-detailed-description .media-frame {
+    display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .member-detailed-description .media-item {
+        flex: 0 1 100%;
+        max-width: 100%;
+    }
+
+    .member-detailed-description .media-img,
+    .member-detailed-description .media-frame {
+        height: 260px;
+    }
+}
+
+/* Compact nav behavior: default on all sizes — hidden until toggled
+   Use opacity/transform for smooth transitions (avoid display:none so transitions work) */
+#site-nav.compact {
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    justify-content: center;
+    align-items: center;
+    /* start transparent and slightly above, then slide down and fade in */
+    background: rgba(0,0,0,0);
+    padding: 0.6rem 10px;
+    border-radius: 0;
+    z-index: 9999;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.0);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-12px);
+    transition: opacity 260ms cubic-bezier(.2,.9,.2,1), transform 260ms cubic-bezier(.2,.9,.2,1), background 260ms ease, box-shadow 260ms ease;
+    pointer-events: none;
+}
+
+#site-nav.compact ul {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+#site-nav.compact a {
+    padding: 8px 14px;
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(-6px);
+    transition: opacity 260ms ease, transform 260ms ease;
+}
+
+/* When header has .nav-open, fade/slide the nav overlay in */
+header.nav-open #site-nav.compact {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    background: rgba(0,0,0,0.78);
+    box-shadow: 0 6px 30px rgba(0,0,0,0.6);
+    pointer-events: auto;
+}
+
+/* stagger links slightly for a nicer effect */
+header.nav-open #site-nav.compact ul a { opacity: 1; transform: translateY(0); }
+header.nav-open #site-nav.compact ul a:nth-child(1) { transition-delay: 0ms; }
+header.nav-open #site-nav.compact ul a:nth-child(2) { transition-delay: 35ms; }
+header.nav-open #site-nav.compact ul a:nth-child(3) { transition-delay: 70ms; }
+header.nav-open #site-nav.compact ul a:nth-child(4) { transition-delay: 105ms; }
+header.nav-open #site-nav.compact ul a:nth-child(5) { transition-delay: 140ms; }
+
+@media (max-width: 480px) {
+    .member-detailed-description .media-img,
+    .member-detailed-description .media-frame {
+        height: 200px;
+    }
+}
+
 /* About section */
 .about-content {
     text-align: center;
@@ -559,6 +706,48 @@ footer {
 
     nav ul {
         gap: 1rem;
+    }
+}
+
+/* Extra mobile polish for small devices */
+@media (max-width: 480px) {
+    /* Make the nav links smaller and more compact */
+    nav a {
+        padding: 8px 12px;
+        font-size: 0.95rem;
+    }
+
+    /* Reduce large main margins so content fits on small screens */
+    main {
+        margin: 1rem 0 2rem;
+    }
+
+    /* Make logo and heading sizes smaller */
+    .logo-image {
+        width: 70px;
+    }
+
+    .logo {
+        font-size: 1.8rem;
+    }
+
+    .subtitle {
+        font-size: 0.85rem;
+    }
+
+    /* Reduce card image heights so they don't push content too far */
+    .member-card .image-container {
+        height: 180px;
+    }
+
+    .member-detailed-description .media-img,
+    .member-detailed-description .media-frame {
+        height: 160px;
+    }
+
+    /* Slightly increase spacing of sections on tiny screens for readability */
+    .section {
+        padding: 1rem;
     }
 }
 

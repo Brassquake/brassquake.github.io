@@ -71,6 +71,31 @@ document.querySelectorAll("nav a").forEach(link => {
     });
 });
 
+// Menu toggle for compact header (appended to avoid interfering with existing DOMContentLoaded handlers)
+document.addEventListener('DOMContentLoaded', () => {
+  const menuButton = document.getElementById('menu-toggle');
+  const headerEl = document.querySelector('header');
+  const siteNav = document.getElementById('site-nav');
+
+  if (menuButton && headerEl && siteNav) {
+    // start in compact mode on small screens
+    siteNav.classList.add('compact');
+
+    menuButton.addEventListener('click', () => {
+      const open = headerEl.classList.toggle('nav-open');
+      menuButton.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    // Close menu when any nav link is clicked (also navigate normally)
+    siteNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        headerEl.classList.remove('nav-open');
+        menuButton.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+});
+
 function showMemberDetail(memberName) {
     const detailSection = document.getElementById(memberName + '-detail');
     if (detailSection) {

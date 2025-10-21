@@ -36,6 +36,11 @@ function updatePage() {
         mainSection.classList.remove('hidden');
     }
 
+    // Initialize search and sort for performances page
+    if (page === 'performances') {
+        initializeSearchAndSort();
+    }
+
     // Show member detail section
     if (page === 'member-detail-page' && url.get('member')) {
         const memberSection = document.getElementById(`${url.get("member")}-detail`);
@@ -285,3 +290,87 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+// Search and sort functionality for performances
+function initializeSearchAndSort() {
+    const searchBar = document.getElementById('performance-search');
+    const searchIcon = document.querySelector('.search-icon');
+    const sortButton = document.getElementById('sort-button');
+    const sortMenu = document.getElementById('sort-menu');
+    const sortOptions = document.querySelectorAll('.sort-option');
+
+    let currentSort = 'newest'; // Default sort
+
+    // Function to filter and sort performances
+    function filterAndSortPerformances() {
+        const searchTerm = searchBar.value.toLowerCase();
+        let filtered = performances.filter(perf =>
+            perf.location.toLowerCase().includes(searchTerm) ||
+            perf.date.toLowerCase().includes(searchTerm) ||
+            (perf.summary && perf.summary.toLowerCase().includes(searchTerm))
+        );
+
+        // Sort the filtered performances
+        filtered.sort((a, b) => {
+            const dateA = new Date(a.date.replace(/(\d+)(st|nd|rd|th)/, '$1'));
+            const dateB = new Date(b.date.replace(/(\d+)(st|nd|rd|th)/, '$1'));
+
+            switch (currentSort) {
+                case 'newest':
+                    return dateB - dateA; // Newest first
+                case 'oldest':
+                    return dateA - dateB; // Oldest first
+                case 'upcoming':
+                    if (a.status === 'upcoming' && b.status !== 'upcoming') return -1;
+                    if (b.status === 'upcoming' && a.status !== 'upcoming') return 1;
+                    return dateA - dateB; // Upcoming first, then by date
+                case 'previous':
+                    if (a.status === 'past' && b.status !== 'past') return -1;
+                    if (b.status === 'past' && a.status !== 'past') return 1;
+                    return dateB - dateA; // Past first, then newest
+                default:
+                    return 0;
+            }
+        });
+
+        makePerformances(filtered);
+        requestAnimationFrame(() => {
+            alignPerformanceText();
+        });
+    }
+
+    // Search input event
+    searchBar.addEventListener('input', filterAndSortPerformances);
+
+    // Search icon click event (optional, since input already triggers on typing)
+    if (searchIcon) {
+        searchIcon.addEventListener('click', () => {
+            searchBar.focus(); // Focus the search bar when icon is clicked
+        });
+    }
+
+    // Sort button toggle
+    sortButton.addEventListener('click', function() {
+        sortMenu.classList.toggle('hidden');
+    });
+
+    // Sort option selection
+    sortOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            currentSort = this.getAttribute('data-sort');
+            sortButton.textContent = this.textContent;
+            sortMenu.classList.add('hidden');
+            filterAndSortPerformances();
+        });
+    });
+
+    // Close sort menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!sortButton.contains(event.target) && !sortMenu.contains(event.target)) {
+            sortMenu.classList.add('hidden');
+        }
+    });
+
+    // Initial render
+    filterAndSortPerformances();
+}

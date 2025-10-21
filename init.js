@@ -105,8 +105,8 @@ let performances = [
         ],
         videos: [
             {
-                title: "Bolero - David Marlatt",
-                url: "https://www.youtube.com/embed/Cti8e4lQblw?si=6z6wYIRd0vkanALu"
+                title: "The Veggietales Theme!",
+                url: "https://www.youtube.com/embed/zbb5xbJCJg4?si=qNWKVj4QvEQqZwl0"
             },
         ],
     },  
@@ -200,16 +200,20 @@ function memberDetails() {
     }
 }
 
-function makePerformances() {
-    for (let i = 0; i < performances.length; i++) {
-        const perf = performances[i];
-        const perfId = `${perf.location}-${perf.date}`.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
+function makePerformances(filteredPerformances = performances) {
+    const grid = document.querySelector('#performance-grid');
+    grid.innerHTML = ''; // Clear existing cards
 
-        document.querySelector('#performance-grid').insertAdjacentHTML('beforeend', `
+    for (let i = 0; i < filteredPerformances.length; i++) {
+        const perf = filteredPerformances[i];
+        const perfId = `${perf.location}-${perf.date}`.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
+        const imageName = perf.date.replace(/(\d+)(st|nd|rd|th)/, '$1').toLowerCase().replace(/\s+/g, '-').replace(/,/g, '');
+
+        grid.insertAdjacentHTML('beforeend', `
             <div class="member-card" onclick="changePage('page=performance-detail-page&performance=${perfId}')">
                 <div class="image-container">
                 ${perf.status === "upcoming" ? '<div class="status-tag">Upcoming</div>' : ''}
-                    <img class="member-image" src="images/performance-${(performances.length-1)-i}.jpg" alt="${perf.location}">
+                    <img class="member-image" src="images/performance-${imageName}.jpg" alt="${perf.location}">
                 </div>
                 <div class="member-name">${perf.location}</div>
                 <div class="member-instrument">${perf.date}</div>
@@ -245,7 +249,7 @@ function performanceDetails() {
                                 </div>
                             `).join('')
                             : '') +
-                            
+
                             (perf.photos && perf.photos.length > 0
                             ? perf.photos.map(photo => `
                                 <div class="media-item">
@@ -254,9 +258,13 @@ function performanceDetails() {
                                 </div>
                             `).join('')
                             : '') ||
-                        
+
                             '<p><strong>Media:</strong> Coming soon!</p>'
                         }
+                    </div>
+                    <!-- Bottom back button -->
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <a href="#" class="back-button" onclick="changePage('page=performances')">← Back to Performances</a>
                     </div>
                 </div>
             </section>

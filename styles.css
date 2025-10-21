@@ -263,6 +263,7 @@ html { font-size: 16px; }
     /* let each column size to the content (intrinsic image/video width) */
     grid-template-columns: repeat(2, max-content);
     justify-content: center; /* center the grid within the container */
+    justify-items: center; /* center odd items */
     gap: 1rem 1.25rem;
     align-items: start;
     width: 100%;
@@ -282,8 +283,6 @@ html { font-size: 16px; }
     width: auto;
     max-width: 100%;
     height: auto;
-    max-height: 720px; /* allow taller media but still reasonable */
-    object-fit: contain;
     display: block;
 }
 
@@ -291,12 +290,12 @@ html { font-size: 16px; }
 @media (max-width: 900px) {
     .performance-media-grid { grid-template-columns: 1fr; max-width: 640px; }
     .member-detailed-description .media-img,
-    .member-detailed-description .media-frame { max-height: 320px; }
+    .member-detailed-description .media-frame { height: auto; }
 }
 
 @media (max-width: 480px) {
     .performance-media-grid { grid-template-columns: 1fr; max-width: 100%; padding: 0 0.5rem; }
-    .member-detailed-description .media-img, .member-detailed-description .media-frame { max-height: 260px; }
+    .member-detailed-description .media-img, .member-detailed-description .media-frame { height: auto; }
 }
 
 /* Responsive nav adjustments */
@@ -311,7 +310,6 @@ nav a { padding: 12px 18px; }
 
 @media (max-width: 480px) {
     nav a { padding: 10px 12px; font-size: 0.95rem; }
-    .member-detailed-description .media-img, .member-detailed-description .media-frame { max-height: 260px; }
     .member-detail-layout { gap: 0.75rem; }
 }
 
@@ -686,11 +684,20 @@ button[type="submit"]:hover {
     gap: 0.5rem;
 }
 
-.member-detailed-description .media-img,
+.member-detailed-description .media-img {
+    width: 600px;
+    height: auto;
+    object-fit: contain; /* maintain aspect ratio without cropping */
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
 .member-detailed-description .media-frame {
-    width: 100%;
-    height: 350px; /* fixed height to match photos and videos */
-    object-fit: cover; /* for images */
+    width: 600px;
+    height: 400px;
+    object-fit: contain; /* maintain aspect ratio without cropping */
     border: 2px solid #ffd700;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
@@ -711,7 +718,8 @@ button[type="submit"]:hover {
 
     .member-detailed-description .media-img,
     .member-detailed-description .media-frame {
-        height: 260px;
+        width: 100%;
+        height: auto;
     }
 }
 
@@ -807,7 +815,8 @@ header.nav-open #site-nav.compact ul a:nth-child(5) { transition-delay: 160ms; }
 @media (max-width: 480px) {
     .member-detailed-description .media-img,
     .member-detailed-description .media-frame {
-        height: 200px;
+        width: 100%;
+        height: auto;
     }
 }
 

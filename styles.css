@@ -257,12 +257,47 @@ html { font-size: 16px; }
 
 /* Performance media grid */
 .performance-media-wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 1rem; }
-.performance-media-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; align-items: start; }
-.member-detailed-description .media-item { display: flex; flex-direction: column; }
+/* Two-column centered grid for performance media */
+.performance-media-grid {
+    display: grid;
+    /* let each column size to the content (intrinsic image/video width) */
+    grid-template-columns: repeat(2, max-content);
+    justify-content: center; /* center the grid within the container */
+    gap: 1rem 1.25rem;
+    align-items: start;
+    width: 100%;
+    margin: 0 auto;
+}
 
-/* Make images and iframes responsive */
+.member-detailed-description .media-item {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+/* Make images and iframes responsive but not squashed */
 .member-detailed-description .media-img,
-.member-detailed-description .media-frame { width: 100%; height: auto; max-height: 420px; object-fit: cover; }
+.member-detailed-description .media-frame {
+    /* use intrinsic width where available, but avoid overflow */
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 720px; /* allow taller media but still reasonable */
+    object-fit: contain;
+    display: block;
+}
+
+/* When the viewport is narrow, reduce the max-height rather than shrinking width */
+@media (max-width: 900px) {
+    .performance-media-grid { grid-template-columns: 1fr; max-width: 640px; }
+    .member-detailed-description .media-img,
+    .member-detailed-description .media-frame { max-height: 320px; }
+}
+
+@media (max-width: 480px) {
+    .performance-media-grid { grid-template-columns: 1fr; max-width: 100%; padding: 0 0.5rem; }
+    .member-detailed-description .media-img, .member-detailed-description .media-frame { max-height: 260px; }
+}
 
 /* Responsive nav adjustments */
 nav ul { padding: 0.5rem; }

@@ -108,7 +108,7 @@ let performances = [
                 title: "Bolero - David Marlatt",
                 url: "https://www.youtube.com/embed/Cti8e4lQblw?si=6z6wYIRd0vkanALu"
             },
-        ]
+        ],
     },  
     {
         date: "July 26th, 2025",
@@ -136,7 +136,7 @@ let performances = [
         status: "past",
         photos: [
             {
-                title: "The Brassquake Team Taking A Fun Break!",
+                title: "The Brassquake Team Taking A Break!",
                 file: "images/1NEW-IMG_0090.JPG"
             },
             {

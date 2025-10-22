@@ -489,7 +489,7 @@ h2::after {
     border: 2px solid #ffd700;
     border-radius: 25px;
     overflow: hidden;
-    background-color: #fff;
+    background: transparent;
     transition: border-color 0.3s ease;
 }
 
@@ -502,14 +502,15 @@ h2::after {
     align-items: center;
     justify-content: center;
     width: 40px;
-    height: 40px;
-    background-color: #333;
+    height: 100%;
+    background: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    border-right: 2px solid #ffd700;
 }
 
 .search-icon:hover {
-    background-color: #555;
+    background-color: rgba(255, 215, 0, 0.1);
 }
 
 .search-bar {
@@ -518,7 +519,7 @@ h2::after {
     border: none;
     font-size: 16px;
     background-color: transparent;
-    color: #333;
+    color: #f0f0f0;
     min-width: 200px;
 }
 

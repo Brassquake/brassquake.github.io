@@ -50,7 +50,7 @@
                                             <br>
                                         <!-- Home image inserted per user request -->
                                         <div class="home-image-wrap" style="text-align:center; margin-top:1rem;">
-                                            <img src="images/TownSquareDerek.png" alt="Brassquake performing" class="home-image">
+                                            <img src="images/firstopenmic.jpg" alt="Brassquake performing" class="home-image">
                                         </div>
                     <hr>
                     <p><span class="school-name">Special thanks to the developers:</span></p>
@@ -103,6 +103,31 @@
                 <h2>Our Performances</h2>
                 <div class="about-content">
                     <p>All of our performances, listed by date!</p>
+                </div>
+                <div class="search-sort-container">
+                    <div class="search-container">
+                        <span class="search-icon">
+                            <svg viewBox="0 0 24 24" width="20" height="20">
+                                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="none" stroke="url(#search-gradient)" stroke-width="2"/>
+                                <defs>
+                                    <linearGradient id="search-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#ffd700;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#ff6b35;stop-opacity:1" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </span>
+                        <input type="text" id="performance-search" class="search-bar" placeholder="Search">
+                    </div>
+                    <div class="sort-container">
+                        <button id="sort-button" class="sort-button">Sort By</button>
+                        <div id="sort-menu" class="sort-menu hidden">
+                            <div class="sort-option" data-sort="newest">Newest to Oldest</div>
+                            <div class="sort-option" data-sort="oldest">Oldest to Newest</div>
+                            <div class="sort-option" data-sort="upcoming">Upcoming</div>
+                            <div class="sort-option" data-sort="previous">Previous</div>
+                        </div>
+                    </div>
                 </div>
                 <div id="performance-grid" class="section">
                     <!-- Performances will be inserted here -->

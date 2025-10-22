@@ -474,6 +474,113 @@ h2::after {
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
+.search-sort-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    border: 2px solid #ffd700;
+    border-radius: 25px;
+    overflow: hidden;
+    background: transparent;
+    transition: border-color 0.3s ease;
+}
+
+.search-container:focus-within {
+    border-color: #ff6b35;
+}
+
+.search-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 100%;
+    background: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-right: 2px solid #ffd700;
+}
+
+.search-icon:hover {
+    background-color: rgba(255, 215, 0, 0.1);
+}
+
+.search-bar {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    font-size: 16px;
+    background-color: transparent;
+    color: #f0f0f0;
+    min-width: 200px;
+}
+
+.search-bar:focus {
+    outline: none;
+    background-color: transparent;
+}
+
+.sort-container {
+    position: relative;
+}
+
+.sort-button {
+    padding: 0.5rem 1rem;
+    background: linear-gradient(45deg, #ffd700, #ff6b35);
+    color: #000;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sort-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+}
+
+.sort-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid #ffd700;
+    border-radius: 10px;
+    min-width: 150px;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+}
+
+.sort-menu:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.sort-option {
+    padding: 0.75rem 1rem;
+    color: #f0f0f0;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.sort-option:hover {
+    background: rgba(255, 215, 0, 0.2);
+}
+
 #performance-grid {
     display: flex;
     flex-wrap: wrap;

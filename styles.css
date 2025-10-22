@@ -525,6 +525,7 @@ h2::after {
 
 .search-bar:focus {
     outline: none;
+    background-color: transparent;
 }
 
 .sort-container {
@@ -573,6 +574,7 @@ h2::after {
     color: #f0f0f0;
     cursor: pointer;
     transition: background 0.3s ease;
+    font-size: 0.9rem;
 }
 
 .sort-option:hover {

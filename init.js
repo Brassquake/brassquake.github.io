@@ -65,11 +65,11 @@ let cards = [
         instrument: "Tuba",
         icon: "🎺",
         desc: "Providing a  big, tonal, and a great bass sound to Brassquake, Nancy never fails to impress the audience and the band! She consistently practices her parts, and creates a positive and welcoming environment for the band!",
-        detailedDesc: `<p>Even though nancy is quite small herself, she plays the biggest instrument - the tuba! And as a cherry on top, she is phenomenal at her instrument, always creating a nice stable bass for the rest of the ensemble to sit on top of. Also an extremely kind individual, Nancy always adds laughter to the quintet!</p>
+        detailedDesc: `<p>Even though nancy is quite small herself, she plays the biggest instrument - the tuba! And as a cherry on top, she is phenomenal at her instrument, always creating a nice stable bass for the rest of the ensemble to sit on top of. Also an extremely kind individual, Nancy always adds laughter and a great environment to the quintet!</p>
                 <br>
-                <p>Extracurriculars</p>
+                <p>Nancy is a part of a jazz combo called The Downbeat Dinos, which also includes other Brassquake members such as Arvin. She is also in the Canadian Air Cadets, sometimes playing euphonium and other times I have no idea. Interestingly, Nancy is also a master at sailing, and she even has a sailing license! Nancy is a very interesting girl all around, full of different quirks!</p>
                 <br>
-                <p>Musical journey</p>
+                <p>Nancy started her musical journey with brass instruments, playing the euphonium for a long time of around 4 years! Then, in the beginning of her grade 9 year, Nancy decided to swap over to the tuba, and has been playing tuba ever since, for around one and a half years!</p>
                 <br>
                 <p><strong>A quote from them:</strong></p>`
     }
@@ -80,7 +80,7 @@ let performances = [
         date: "October 24th, 2025",
         location: "The Residences on Yonge, 15520 Yonge St, Aurora, ON",
         summary: "One-hour performance at a retirement home along with many other amazing bands!",
-        details: "Backed by the non-profit organization 'The Chords of Care', Brassquake will be performing at a local retirement home, giving a great experience to everyone who watches! With new and intriguing repertoire, you are sure to have a great time!",
+        details: "Backed by the non-profit organization 'The Chords of Care', Brassquake will be performing at a retirement home, giving a great experience to everyone! With new and intriguing repertoire, you are sure to have a great time!",
         status: "upcoming"
     },
     {
@@ -112,9 +112,9 @@ let performances = [
     },  
     {
         date: "July 26th, 2025",
-        location: "Aurora Town Square",
+        location: "Aurora Town Square & Aurora Cultural Center",
         summary: "Outdoor live concert for the people of Aurora at the Aurora Town Square!",
-        details: "Outdoor concert for a live audience. Playing over 30 minutes of repertoire, the people of Aurora greatly enjoyed the band! Yes indeed we did!",
+        details: "Outdoor concert for a live audience. Playing over 30 minutes of repertoire, the people of Aurora greatly enjoyed the band and what we had to offer! We performed a variety of music from classical to modern compositions!",
         status: "past",
         videos: [
             {
@@ -132,7 +132,7 @@ let performances = [
         date: "May 30th, 2025",
         location: "Dr. G.W. Williams Secondary School",
         summary: "End-of-year alumni performance before our school moves locations!",
-        details: "Performance for many past graduates of G.W. as a celebration of the school move. Over an hour of repertoire, the alumni had a great time! They did indeed!",
+        details: "Performance for many past G.W. attendees. Over an hour of repertoire, the alumni had a great time. Brassquake was also able to enjoy many stories from the past, told to us by the countless alumni that attended!",
         status: "past",
         photos: [
             {

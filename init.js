@@ -211,7 +211,7 @@ function makePerformances(filteredPerformances = performances) {
         const imageName = perf.date.replace(/(\d+)(st|nd|rd|th)/, '$1').toLowerCase().replace(/\s+/g, '-').replace(/,/g, '');
 
         grid.insertAdjacentHTML('beforeend', `
-            <div class="member-card" onclick="changePage('page=performance-detail-page&performance=${perfId}')">
+            <div class="member-card performance-card" onclick="changePage('page=performance-detail-page&performance=${perfId}')">
                 <div class="image-container">
                 ${perf.status === "upcoming" ? '<div class="status-tag">Upcoming</div>' : ''}
                     <img class="member-image performance-image" src="images/performance-${imageName}.jpg" alt="${perf.location}">

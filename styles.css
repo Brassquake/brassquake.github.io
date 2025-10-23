@@ -454,7 +454,7 @@ h2::after {
 
 .member-card .image-container {
     width: 100%;
-    aspect-ratio: 1;
+    aspect-ratio: 1/1;
     overflow: hidden;
     border-radius: 10px;
     margin-bottom: 1rem;
@@ -469,8 +469,26 @@ h2::after {
     border-radius: 10px;
 }
 
+.performance-card {
+    /* Remove display: inline-block to let flex item size to content */
+}
+
+.performance-card .image-container {
+    width: auto;
+    height: auto;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
 .performance-image {
     object-fit: contain !important;
+    width: auto;
+    height: auto;
 }
 
 .status-tag {
@@ -597,6 +615,7 @@ h2::after {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    align-items: flex-start;
     gap: 2rem;
     margin-top: 2rem;
 }

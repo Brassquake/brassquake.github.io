@@ -469,6 +469,10 @@ h2::after {
     border-radius: 10px;
 }
 
+.performance-image {
+    object-fit: contain !important;
+}
+
 .status-tag {
     position: absolute;
     top: 10px;

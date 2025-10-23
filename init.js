@@ -214,7 +214,7 @@ function makePerformances(filteredPerformances = performances) {
             <div class="member-card" onclick="changePage('page=performance-detail-page&performance=${perfId}')">
                 <div class="image-container">
                 ${perf.status === "upcoming" ? '<div class="status-tag">Upcoming</div>' : ''}
-                    <img class="member-image" src="images/performance-${imageName}.jpg" alt="${perf.location}">
+                    <img class="member-image performance-image" src="images/performance-${imageName}.jpg" alt="${perf.location}">
                 </div>
                 <div class="member-name">${perf.location}</div>
                 <div class="member-instrument">${perf.date}</div>

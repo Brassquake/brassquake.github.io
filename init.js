@@ -5,8 +5,8 @@ let cards = [
     {
         name: "Arvin Omidvar",
         img: "arvino.jpg",
+        detailImg: "arvino.jpg",
         instrument: "Trumpet",
-        icon: "🎺",
         desc: "Our first trumpet player has an excellent variety of skills in many different brass instruments. He finds and chooses repertoire for the ensemble, generates different ideas, and adds a bright beautiful sound to the mix.",
         detailedDesc: `<p>An extremely reliant and skilled player, our first trumpet player has experience in all fields of brass. He can create a variety of sound, ranging from bright sound to rip through the quintet to beautiful dark tone! With a deep passion for music, Arvin makes sure to keep the quintet enthusiastic and is a great addition.</p>
                     <br>
@@ -19,8 +19,8 @@ let cards = [
     {
         name: "Alex Uchida",
         img: "alex.JPEG",
+        detailImg: "alex.JPEG",
         instrument: "Trumpet",
-        icon: "🎺",
         desc: "Our second trumpet player is a skilled and highly reliant player, using her tonal sound to add beauty to the quintet. An extremely generous person as well, as Alex always lends a helping hand to the quintet.",
         detailedDesc: `<p>Playing trumpet for 4 years, our second player is an extremely talented and kind individual. She has a love for Tim Horton's and Animal Crossing as well. Alex has a deep passion for music and the trumpet, providing the quintet with a beautiful tonal sound through her playing. A highly-reliant player, Alex is sure to impress!</p>
                 <br>
@@ -33,8 +33,8 @@ let cards = [
     {
         name: "Arwen Leong",
         img: "ArwenImage.png",
+        detailImg: "ArwenImage.png",
         instrument: "French Horn",
-        icon: "📯",
         desc: "Bridging the gap between the high and low voices, our french horn player has wonderful harmonies to show. Arwen brings lots of energy to the quintet with her vibrant and outgoing personality, always lightening the mood.",
         detailedDesc: `<p>Playing the most difficult brass instrument of them all, Arwen displays wonderful skill playing the French Horn. Even though she has limited experience with only one year of playing, Arwen quickly surpassed all of her peers through sheer determination and practice. She is a great addition to the ensemble and always nails her parts.</p>
                 <br>
@@ -47,8 +47,8 @@ let cards = [
     {
         name: "Brian Weng",
         img: "BrianImage.JPG",
+        detailImg: "BrianImage.JPG",
         instrument: "Trombone",
-        icon: "🎺",
         desc: "Adding a unique sound and texture to the band, Brian always nails his parts, all while giving the band a great time through his high energy and funny personality. Always adds something interesting to the band!",
         detailedDesc: `<p>Known for being creative and special from his friends in a good and bad way. Brian generates many great ideas for repertoire, and helps arrange lots of it as well, as he has a great sense of pitch. Adding a very interesting personality to the band, everyone loves Brian!</p>
                 <br>
@@ -62,8 +62,8 @@ let cards = [
     {
         name: "Nancy Qiu",
         img: "NancyImage.JPG",
+        detailImg: "NancyImage.JPG",
         instrument: "Tuba",
-        icon: "🎺",
         desc: "Providing a  big, tonal, and a great bass sound to Brassquake, Nancy never fails to impress the audience and the band! She consistently practices her parts, and creates a positive and welcoming environment for the band!",
         detailedDesc: `<p>Even though nancy is quite small herself, she plays the biggest instrument - the tuba! And as a cherry on top, she is phenomenal at her instrument, always creating a nice stable bass for the rest of the ensemble to sit on top of. Also an extremely kind individual, Nancy always adds laughter and a great environment to the quintet!</p>
                 <br>
@@ -71,7 +71,7 @@ let cards = [
                 <br>
                 <p>Nancy started her musical journey with brass instruments, playing the euphonium for a long time of around 4 years! Then, in the beginning of her grade 9 year, Nancy decided to swap over to the tuba, and has been playing tuba ever since, for around one and a half years!</p>
                 <br>
-                <p><strong>A quote from them:</strong></p>`
+                <p><strong>"Why practice when you could not"</strong></p>`
     }
 ];
 
@@ -167,7 +167,9 @@ function makeCards() {
     for (let i = 0; i < cards.length; i++) {
         document.querySelector('#members-grid').insertAdjacentHTML('beforeend', `
             <div class="member-card" onclick="changePage('page=member-detail-page&member=${cards[i].name.toLowerCase().replace(/\s+/g, '-')}')">
-                <span class="instrument-icon">${cards[i].icon}</span>
+                <div class="image-container">
+                    <img class="member-image" src="images/${cards[i].img}" alt="${cards[i].name}">
+                </div>
                 <div class="member-name">${cards[i].name}</div>
                 <div class="member-instrument">${cards[i].instrument}</div>
                 <div class="member-description">${cards[i].desc}</div>
@@ -182,13 +184,12 @@ function memberDetails() {
             <section id="${cards[i].name.toLowerCase().replace(/\s+/g, '-')}-detail" class="section hidden">
                 <div class="member-detail">
                     <a href="#" class="back-button" onclick="changePage('page=members')">← Back to Members</a>
-                    <span class="instrument-icon">${cards[i].icon}</span>
                     <h2>${cards[i].name}</h2>
                     <div class="member-instrument">${cards[i].instrument}</div>
                     <br>
                     <div class="member-detail-layout">
                         <div class="image-container member-detail-image">
-                            <img class="member-image" src="images/${cards[i].img}" alt="${cards[i].name}">
+                            <img class="member-image" src="images/${cards[i].detailImg}" alt="${cards[i].name}">
                         </div>
                         <div class="member-detailed-description member-detail-desc">
                             <p>${cards[i].detailedDesc}</p>

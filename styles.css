@@ -470,27 +470,26 @@ h2::after {
 }
 
 .performance-card {
-    /* Remove display: inline-block to let flex item size to content */
+    display: block;
+    width: 30%;
+    min-width: 200px;
 }
 
 .performance-card .image-container {
-    width: auto;
-    height: auto;
-    display: inline-block;
-    margin-bottom: 0.5rem;
-    border: 2px solid #ffd700;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    background-color: rgba(0, 0, 0, 0.2);
-    overflow: hidden;
+    display: contents;
 }
 
 .performance-image {
-    object-fit: contain !important;
-    width: auto;
+    display: block;
+    width: 100%;
     height: auto;
+    max-height: 250px;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 4px solid #ffd700;
+    background: none;
+    margin-bottom: 1.25rem;
 }
-
 .status-tag {
     position: absolute;
     top: 10px;
@@ -614,7 +613,7 @@ h2::after {
 #performance-grid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
     align-items: flex-start;
     gap: 2rem;
     margin-top: 2rem;

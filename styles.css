@@ -874,14 +874,15 @@ button[type="submit"]:hover {
     }
 
     #site-nav.compact {
-        top: 44px; /* below the menu button */
+        top: 56px; /* right below the menu button (button top:12px + height:44px = 56px) */
         left: 50%;
+        right: auto; /* unset right to allow centering */
         transform: translateX(-50%);
         width: 200px; /* fixed width for vertical menu */
         flex-direction: column;
         align-items: center;
-        transform-origin: top center;
-        transform: translateY(-10px) scaleY(0);
+        transform-origin: top center !important;
+        transform: translateY(-10px) scaleY(0) !important;
     }
 
     #site-nav.compact ul {
@@ -897,11 +898,11 @@ button[type="submit"]:hover {
     }
 
     header.nav-open #site-nav.compact {
-        transform: translateY(0) scaleY(1);
+        transform: translateY(0) scaleY(1) !important;
     }
 
     header.nav-closing #site-nav.compact {
-        transform: translateY(-10px) scaleY(0);
+        transform: translateY(-10px) scaleY(0) !important;
     }
 }
 

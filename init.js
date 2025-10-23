@@ -73,7 +73,7 @@ let cards = [
                 <br>
                 <p><strong>"Why practice when you could not"</strong></p>`
     }
-];
+]; 
 
 let performances = [
     {

@@ -101,6 +101,12 @@ button:hover {
     box-shadow: 0 8px 20px rgba(0,0,0,0.4);
 }
 
+@media (max-width: 768px) {
+    .home-image {
+        max-width: 100%;
+    }
+}
+
 .captioned-image .caption {
     margin-top: 0.25rem;
     color: #ddd;
@@ -305,7 +311,7 @@ nav a { padding: 12px 18px; }
 
 @media (max-width: 900px) {
     .member-card { width: 90%; }
-    .member-detail-layout { grid-template-columns: 1fr; }
+    .member-detail-layout { flex-direction: column; }
     .logo { font-size: 2.5rem; }
 }
 
@@ -963,7 +969,7 @@ footer {
     }
 
     .member-card {
-        width: 90%;
+        width: 100%;
     }
 
     h2 {

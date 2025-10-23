@@ -866,29 +866,34 @@ button[type="submit"]:hover {
     pointer-events: none;
 }
 
-/* On mobile/small screens, make the nav expand vertically */
+/* On mobile/small screens, center the menu button and make the nav expand vertically with centered text */
 @media (max-width: 768px) {
+    .menu-button {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
     #site-nav.compact {
         top: 44px; /* below the menu button */
-        left: 12px; /* align with menu button */
-        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
         width: 200px; /* fixed width for vertical menu */
         flex-direction: column;
-        align-items: flex-start;
-        transform-origin: top left;
+        align-items: center;
+        transform-origin: top center;
         transform: translateY(-10px) scaleY(0);
     }
 
     #site-nav.compact ul {
         flex-direction: column;
         gap: 0.5rem;
-        align-items: flex-start;
+        align-items: center;
     }
 
     #site-nav.compact a {
         padding: 10px 15px;
         width: 100%;
-        text-align: left;
+        text-align: center;
     }
 
     header.nav-open #site-nav.compact {

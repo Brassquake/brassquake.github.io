@@ -323,7 +323,7 @@ function initializeSearchAndSort() {
                 case 'upcoming':
                     if (a.status === 'upcoming' && b.status !== 'upcoming') return -1;
                     if (b.status === 'upcoming' && a.status !== 'upcoming') return 1;
-                    return dateA - dateB; // Upcoming first, then by date
+                    return dateB - dateA; // Upcoming first, then newest to oldest
                 case 'previous':
                     if (a.status === 'past' && b.status !== 'past') return -1;
                     if (b.status === 'past' && a.status !== 'past') return 1;

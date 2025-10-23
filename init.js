@@ -65,7 +65,7 @@ let cards = [
         detailImg: "NancyImage.JPG",
         instrument: "Tuba",
         desc: "Providing a  big, tonal, and a great bass sound to Brassquake, Nancy never fails to impress the audience and the band! She consistently practices her parts, and creates a positive and welcoming environment for the band!",
-        detailedDesc: `<p>Even though nancy is quite small herself, she plays the biggest instrument - the tuba! And as a cherry on top, she is phenomenal at her instrument, always creating a nice stable bass for the rest of the ensemble to sit on top of. Also an extremely kind individual, Nancy always adds laughter and a great environment to the quintet!</p>
+        detailedDesc: `<p>Even though Nancy is quite small herself, she plays the biggest instrument - the tuba! And as a cherry on top, she is phenomenal at her instrument, always creating a nice stable bass for the rest of the ensemble to sit on top of. Also an extremely kind individual, Nancy always adds laughter and a great environment to the quintet!</p>
                 <br>
                 <p>Nancy is a part of a jazz combo called The Downbeat Dinos, which also includes other Brassquake members such as Arvin. She is also in the Canadian Air Cadets, sometimes playing euphonium! Interestingly, Nancy is also a master at sailing, and she even has a sailing license! Nancy is a very interesting girl all around, full of different quirks!</p>
                 <br>

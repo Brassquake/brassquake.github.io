@@ -1087,10 +1087,10 @@ footer {
         font-size: 0.85rem;
     }
 
-    /* Make member card images square */
+    /* Force square member card images that fill the card width on mobile */
     .member-card .image-container {
-        width: 180px;
-        height: 180px;
+        width: 100%;
+        aspect-ratio: 1/1;
     }
 
     .member-detailed-description .media-img,

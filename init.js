@@ -14,7 +14,9 @@ let cards = [
                     <br>
                     <p>Starting piano at age 7, Arvin was quickly pulled in by the world of music. He played piano for around 3 years, and then played the flute during grades 6 to 8. In the middle of grade 8, he explored a multitude of brass instruments such as the tuba, eventually settling on the trumpet.</p>
                     <br>
-                    <p><strong>"To be the best, you must first believe you're the best"</strong></p>`
+                    <p><strong>"To be the best, you must first believe you're the best"</strong></p>
+                    <br>
+                    <p><strong>Birthday: March 20th</strong></p>`
     },
     {
         name: "Alex Uchida",
@@ -28,7 +30,9 @@ let cards = [
                 <br>
                 <p>In grade 6, Alex had a strong liking for percussion instruments, and really wanted to play percussion. However, she changed her choice and has been playing trumpet since grade 6. She did not explore any other instruments, as she had lots of love for the trumpet.</p>
                 <br>
-                <p><strong>"✨Thousands of light houses stuck at the end of the sky✨" - River Wyles From To The Moon</strong></p>`
+                <p><strong>"✨Thousands of light houses stuck at the end of the sky✨" - River Wyles From To The Moon</strong></p>
+                <br>
+                <p><strong>Birthday: August 16th</strong></p>`
     },
     {
         name: "Arwen Leong",
@@ -42,7 +46,9 @@ let cards = [
                 <br>
                 <p>Starting her musical journey with the piano, Arwen played piano for 7 years before giving wind instruments a try. She then gave some time to both woodwind and brass instruments, spending time with the flute and the trumpet. She eventually found her love for the French Horn and has been playing it ever since.</p>
                 <br>
-                <p><strong>"If you can't beat them, eat them"</strong></p>`
+                <p><strong>"If you can't beat them, eat them"</strong></p>
+                <br>
+                <p><strong>Birthday: August 31st</strong></p>`
     },
     {
         name: "Brian Weng",
@@ -56,7 +62,9 @@ let cards = [
                 <br>
                 <p>Developing his musicality from a young age, Brian is a classically trained pianist, and has been playing piano for over 10 years. He entered the world of wind instruments with great backgroud experience, helping him excel at his instrument. Brian has now been playing trombone for about 3 years, and plans on continuing his playing.</p>
                 <br>
-                <p><strong>"5th position is not real"</strong></p>`
+                <p><strong>"5th position is not real"</strong></p>
+                <br>
+                <p><strong>Birthday: March 8th</strong></p>`
         
     },
     {
@@ -71,7 +79,9 @@ let cards = [
                 <br>
                 <p>Nancy started her musical journey with brass instruments, playing the euphonium for a long time of around 4 years! Then, in the beginning of her grade 9 year, Nancy decided to swap over to the tuba, and has been playing tuba ever since, for around one and a half years!</p>
                 <br>
-                <p><strong>"Why practice when you could not"</strong></p>`
+                <p><strong>"Why practice when you could not"</strong></p>
+                <br>
+                <p><strong>Birthday: April 15th</strong></p>`
     }
 ]; 
 

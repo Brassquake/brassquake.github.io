@@ -34,7 +34,7 @@ html {
     }
 }
 
-body {
+html, body {
     font-family: 'Arial', sans-serif;
     background: linear-gradient(to bottom, #2b1b3f 0%, #4c2a6a 50%, #6a3f8c 100%);
     color: #f0f0f0;
@@ -919,6 +919,10 @@ button[type="submit"]:hover {
 
     header.nav-open #site-nav.compact {
         transform: translateX(-50%) scaleY(1);
+    }
+
+    header.nav-open #site-nav.compact ul a {
+        transform: translateY(0);
     }
 
     header.nav-closing #site-nav.compact {

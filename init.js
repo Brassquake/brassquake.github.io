@@ -260,16 +260,9 @@ function makePerformances(filteredPerformances = performances) {
     }
 }
 
-// Function to check image aspect ratio and set object-fit accordingly
+// Function to set object-fit to cover for all images to fill the container
 function checkImageAspect(img) {
-    const aspectRatio = img.naturalWidth / img.naturalHeight;
-    if (aspectRatio > 1) {
-        // Landscape: crop from sides
-        img.style.objectFit = 'cover';
-    } else {
-        // Portrait: stretch to fill
-        img.style.objectFit = 'fill';
-    }
+    img.style.objectFit = 'cover';
 }
 
 function performanceDetails() {

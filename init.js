@@ -1,5 +1,11 @@
 
-window.addEventListener('resize', () => {realignPerformanceText();});
+let resizeTimeout;
+window.addEventListener('resize', () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+        alignPerformanceText();
+    }, 100);
+});
 
 let cards = [
     {
@@ -330,16 +336,15 @@ function createFloatingNotes() {
     const notesContainer = document.querySelector('.music-notes');
     const notes = ['♪', '♫', '♬', '♩', '♭', '♯', '𝄞'];
 
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 7; i++) {
         const note = document.createElement('div');
         note.className = 'note';
         note.textContent = notes[Math.floor(Math.random() * notes.length)];
         note.style.left = Math.random() * 100 + '%';
-        note.style.top = Math.random() * 100 + '%';
+        note.style.top = (Math.random() * 80) + '%'; // Position from 0% to 80% to allow behind transparent header
         note.style.animationDelay = Math.random() * 6 + 's';
         note.style.fontSize = (Math.random() * 1.5 + 1.5) + 'rem';
         notesContainer.appendChild(note);
-        console.log('Creating note:', note.textContent);
     }
 }
 
@@ -370,8 +375,6 @@ function alignPerformanceText() {
                 maxHeight = child.offsetHeight;
             }
         });
-
-        console.log(`Max height for child index ${i}: ${maxHeight}`);
 
         // Step 2: apply marginTop to align this child across all cards
         cards.forEach(card => {

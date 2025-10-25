@@ -94,6 +94,10 @@ let performances = [
         status: "past",
         photos: [
             {
+                title: "On The Way!",
+                file: "images/BrassquakeCar.jpg"
+            },
+            {
                 title: "The Whole Team!",
                 file: "images/BrassquakeSeniorHome.jpg"
             },
@@ -184,14 +188,6 @@ let performances = [
                 file: "images/AlumniPerformance1.jpg"
             },
             {
-                title: "In The Frame: Arvin!",
-                file: "images/IMG_9987.JPG"
-            },
-            {
-                title: "In The Frame: Brian!",
-                file: "images/IMG_0081.JPG"
-            },
-            {
                 title: "In The Frame: Arwen, Nancy & Brian!",
                 file: "images/AlumniPerformance2.jpg"
             },
@@ -264,6 +260,18 @@ function makePerformances(filteredPerformances = performances) {
     }
 }
 
+// Function to check image aspect ratio and set object-fit accordingly
+function checkImageAspect(img) {
+    const aspectRatio = img.naturalWidth / img.naturalHeight;
+    if (aspectRatio > 1) {
+        // Landscape: crop from sides
+        img.style.objectFit = 'cover';
+    } else {
+        // Portrait: stretch to fill
+        img.style.objectFit = 'fill';
+    }
+}
+
 function performanceDetails() {
     for (let i = 0; i < performances.length; i++) {
         const perf = performances[i];
@@ -278,7 +286,7 @@ function performanceDetails() {
                     <br>
                     <p style="margin-bottom: 2rem;">${perf.details || 'Details coming soon!'}</p>
                 </div>
-        
+
                 <!-- Move media outside of .member-detail -->
                 <div class="performance-media-wrap">
                     <div class="member-detailed-description performance-media-grid">
@@ -295,7 +303,7 @@ function performanceDetails() {
                             ? perf.photos.map(photo => `
                                 <div class="media-item">
                                     <h3 style="color: #ffd700; margin-bottom: 0.5rem; text-align: center;">${photo.title}</h3>
-                                    <img class="media-img" src="${photo.file}" alt="${photo.title}">
+                                    <img class="media-img" src="${photo.file}" alt="${photo.title}" onload="checkImageAspect(this)">
                                 </div>
                             `).join('')
                             : '') ||

@@ -5,7 +5,7 @@ let cards = [
     {
         name: "Arvin Omidvar",
         img: "arvino.jpg",
-        detailImg: "arvino.jpg",
+        detailImg: "ArvinMemberDetail.JPG",
         instrument: "Trumpet",
         desc: "Our first trumpet player has an excellent variety of skills in many different brass instruments. He finds and chooses repertoire for the ensemble, generates different ideas, and adds a bright beautiful sound to the mix.",
         detailedDesc: `<p>An extremely reliant and skilled player, our first trumpet player has experience in all fields of brass. He can create a variety of sound, ranging from bright sound to rip through the quintet to beautiful dark tone! With a deep passion for music, Arvin makes sure to keep the quintet enthusiastic and is a great addition.</p>
@@ -20,8 +20,8 @@ let cards = [
     },
     {
         name: "Alex Uchida",
-        img: "alex.JPEG",
-        detailImg: "alex.JPEG",
+        img: "AlexMemberCard.JPG",
+        detailImg: "AlexMemberDetail.JPG",
         instrument: "Trumpet",
         desc: "Our second trumpet player is a skilled and highly reliant player, using her tonal sound to add beauty to the quintet. An extremely generous person as well, as Alex always lends a helping hand to the quintet.",
         detailedDesc: `<p>Playing trumpet for 4 years, our second player is an extremely talented and kind individual. She has a love for Tim Horton's and Animal Crossing as well. Alex has a deep passion for music and the trumpet, providing the quintet with a beautiful tonal sound through her playing. A highly-reliant player, Alex is sure to impress!</p>
@@ -36,8 +36,8 @@ let cards = [
     },
     {
         name: "Arwen Leong",
-        img: "ArwenImage.png",
-        detailImg: "ArwenImage.png",
+        img: "ArwenMemberCard.JPG",
+        detailImg: "ArwenMemberDetail.JPG",
         instrument: "French Horn",
         desc: "Bridging the gap between the high and low voices, our french horn player has wonderful harmonies to show. Arwen brings lots of energy to the quintet with her vibrant and outgoing personality, always lightening the mood.",
         detailedDesc: `<p>Playing the most difficult brass instrument of them all, Arwen displays wonderful skill playing the French Horn. Even though she has limited experience with only one year of playing, Arwen quickly surpassed all of her peers through sheer determination and practice. She is a great addition to the ensemble and always nails her parts.</p>
@@ -53,7 +53,7 @@ let cards = [
     {
         name: "Brian Weng",
         img: "BrianImage.JPG",
-        detailImg: "BrianImage.JPG",
+        detailImg: "BrianMemberDetail.JPG",
         instrument: "Trombone",
         desc: "Adding a unique sound and texture to the band, Brian always nails his parts, all while giving the band a great time through his high energy and funny personality. Always adds something interesting to the band!",
         detailedDesc: `<p>Known for being creative and special from his friends in a good and bad way. Brian generates many great ideas for repertoire, and helps arrange lots of it as well, as he has a great sense of pitch. Adding a very interesting personality to the band, everyone loves Brian!</p>
@@ -70,7 +70,7 @@ let cards = [
     {
         name: "Nancy Qiu",
         img: "NancyImage.JPG",
-        detailImg: "NancyImage.JPG",
+        detailImg: "NancyMemberDetail.JPG",
         instrument: "Tuba",
         desc: "Providing a  big, tonal, and a great bass sound to Brassquake, Nancy never fails to impress the audience and the band! She consistently practices her parts, and creates a positive and welcoming environment for the band!",
         detailedDesc: `<p>Even though Nancy is quite small herself, she plays the biggest instrument - the tuba! And as a cherry on top, she is phenomenal at her instrument, always creating a nice stable bass for the rest of the ensemble to sit on top of. Also an extremely kind individual, Nancy always adds laughter and a great environment to the quintet!</p>
@@ -90,14 +90,44 @@ let performances = [
         date: "October 24th, 2025",
         location: "The Residences on Yonge, 15520 Yonge St, Aurora, ON",
         summary: "One-hour performance at a retirement home along with many other amazing bands!",
-        details: "Backed by the non-profit organization 'The Chords of Care', Brassquake will be performing at a retirement home, giving a great experience to everyone! With new and intriguing repertoire, you are sure to have a great time!",
-        status: "upcoming"
+        details: "Backed by the non-profit organization 'The Chords of Care', Brassquake performed at a retirement home, giving a great experience to everyone who attended! With new and intriguing repertoire, everyone had a great time!",
+        status: "past",
+        photos: [
+            {
+                title: "The Whole Team!",
+                file: "images/BrassquakeSeniorHome.jpg"
+            },
+            {
+                title: "Arvin!",
+                file: "images/ArvinSeniorHome.jpg"
+            },
+            {
+                title: "Alex!",
+                file: "images/AlexSeniorHome.jpg"
+            },
+            {
+                title: "Brian!",
+                file: "images/BrianSeniorHome.jpg"
+            },
+            {
+                title: "Arwen!",
+                file: "images/ArwenSeniorHome.jpg"
+            },
+            {
+                title: "Nancy!",
+                file: "images/NancySeniorHome.jpg"
+            },
+            {
+                title: "So Mysterious!",
+                file: "images/BrianAura.jpg"
+            },
+        ],
     },
     {
         date: "October 17th, 2025",
         location: "Dr. G.W. Williams Secondary School",
         summary: "Open mic performance! The first perfomance of the 2025-26 school year!",
-        details: "Hosted by Dr. G.W. Williams, this open mic is free for all audiences! With many other great bands performing, the open mic is the perfect place to start our year! Free snacks included, so come by and you won't regret it at all!",
+        details: "Hosted by Dr. G.W. Williams, this open mic was free for all audiences! With many other great bands performing, the open mic was the perfect place to start our year! Free snacks included, our audience greatly enjoyed it!",
         status: "past",
         photos: [
             {

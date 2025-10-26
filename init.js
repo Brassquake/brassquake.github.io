@@ -27,7 +27,7 @@ let cards = [
     {
         name: "Alex Uchida",
         img: "AlexMemberCard.JPG",
-        detailImg: "AlexMemberDetail.JPG",
+        detailImg: "AlexMemberDetail.jpg",
         instrument: "Trumpet",
         desc: "Our second trumpet player is a skilled and highly reliant player, using her tonal sound to add beauty to the quintet. An extremely generous person as well, as Alex always lends a helping hand to the quintet.",
         detailedDesc: `<p>Playing trumpet for 4 years, our second player is an extremely talented and kind individual. She has a love for Tim Horton's and Animal Crossing as well. Alex has a deep passion for music and the trumpet, providing the quintet with a beautiful tonal sound through her playing. A highly-reliant player, Alex is sure to impress!</p>
@@ -43,7 +43,7 @@ let cards = [
     {
         name: "Arwen Leong",
         img: "ArwenMemberCard.JPG",
-        detailImg: "ArwenMemberDetail.JPG",
+        detailImg: "ArwenMemberDetail.jpg",
         instrument: "French Horn",
         desc: "Bridging the gap between the high and low voices, our french horn player has wonderful harmonies to show. Arwen brings lots of energy to the quintet with her vibrant and outgoing personality, always lightening the mood.",
         detailedDesc: `<p>Playing the most difficult brass instrument of them all, Arwen displays wonderful skill playing the French Horn. Even though she has limited experience with only one year of playing, Arwen quickly surpassed all of her peers through sheer determination and practice. She is a great addition to the ensemble and always nails her parts.</p>

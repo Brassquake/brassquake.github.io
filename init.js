@@ -331,22 +331,7 @@ document.querySelectorAll('nav a').forEach(link => {
     });
 });
 
-// Create floating musical notes
-function createFloatingNotes() {
-    const notesContainer = document.querySelector('.music-notes');
-    const notes = ['♪', '♫', '♬', '♩', '♭', '♯', '𝄞'];
 
-    for (let i = 0; i < 7; i++) {
-        const note = document.createElement('div');
-        note.className = 'note';
-        note.textContent = notes[Math.floor(Math.random() * notes.length)];
-        note.style.left = Math.random() * 100 + '%';
-        note.style.top = (Math.random() * 80) + '%'; // Position from 0% to 80% to allow behind transparent header
-        note.style.animationDelay = Math.random() * 6 + 's';
-        note.style.fontSize = (Math.random() * 1.5 + 1.5) + 'rem';
-        notesContainer.appendChild(note);
-    }
-}
 
 // Add some interactive effects
 document.querySelectorAll('.member-card').forEach(card => {
@@ -387,7 +372,6 @@ function alignPerformanceText() {
 
 // Initialize the page
 document.addEventListener('DOMContentLoaded', function () {
-    createFloatingNotes();
     updatePage();
     window.scrollTo(0, 0);
 

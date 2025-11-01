@@ -310,6 +310,13 @@ function initializeSearchAndSort() {
             (perf.summary && perf.summary.toLowerCase().includes(searchTerm))
         );
 
+        // Apply sort-specific filtering
+        if (currentSort === 'upcoming') {
+            filtered = filtered.filter(perf => perf.status === 'upcoming');
+        } else if (currentSort === 'previous') {
+            filtered = filtered.filter(perf => perf.status === 'past');
+        }
+
         // Sort the filtered performances
         filtered.sort((a, b) => {
             const dateA = new Date(a.date.replace(/(\d+)(st|nd|rd|th)/, '$1'));
@@ -321,19 +328,16 @@ function initializeSearchAndSort() {
                 case 'oldest':
                     return dateA - dateB; // Oldest first
                 case 'upcoming':
-                    if (a.status === 'upcoming' && b.status !== 'upcoming') return -1;
-                    if (b.status === 'upcoming' && a.status !== 'upcoming') return 1;
-                    return dateB - dateA; // Upcoming first, then newest to oldest
+                    return dateA - dateB; // Earliest upcoming first
                 case 'previous':
-                    if (a.status === 'past' && b.status !== 'past') return -1;
-                    if (b.status === 'past' && a.status !== 'past') return 1;
-                    return dateB - dateA; // Past first, then newest
+                    return dateB - dateA; // Newest past first
                 default:
                     return 0;
             }
         });
 
-        makePerformances(filtered);
+        const message = currentSort === 'upcoming' && filtered.length === 0 ? 'Nothing To See Here!' : '';
+        makePerformances(filtered, message);
         requestAnimationFrame(() => {
             alignPerformanceText();
         });

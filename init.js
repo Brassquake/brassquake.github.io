@@ -156,7 +156,7 @@ let performances = [
         videos: [
             {
                 title: "The Veggietales Theme!",
-                url: "https://www.youtube.com/embed/zbb5xbJCJg4?si=qNWKVj4QvEQqZwl0"
+                url: "https://www.youtube.com/embed/zbb5xbJCJg4?si=Mn0Ai864qhsxSvts"
             },
         ],
     },  
@@ -169,11 +169,11 @@ let performances = [
         videos: [
             {
                 title: "Bolero - David Marlatt",
-                url: "https://www.youtube.com/embed/Cti8e4lQblw?si=6z6wYIRd0vkanALu"
+                url: "https://www.youtube.com/embed/Cti8e4lQblw?si=9MUQeYpkCuFJcqni"
             },
             {
                 title: "Pride and Valour - Ryan Meeboer",
-                url: "https://www.youtube.com/embed/ve_6N2liHjY?si=v6jKJroCLKBkOQUL"
+                url: "https://www.youtube.com/embed/ve_6N2liHjY?si=PD5k9QgLS-TZobs6"
             }
         ]
     },
@@ -298,7 +298,7 @@ function performanceDetails() {
                             ? perf.videos.map(video => `
                                 <div class="media-item">
                                     <h3 style="color: #ffd700; margin-bottom: 0.5rem; text-align: center;">${video.title}</h3>
-                                    <iframe class="media-frame" src="${video.url}" frameborder="0" allowfullscreen></iframe>
+                                    <iframe class="media-frame" src="${video.url}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                                 </div>
                             `).join('')
                             : '') +

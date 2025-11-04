@@ -1,4 +1,32 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // FAQ data
+  let faq = [
+    {
+      question: "How can I book Brassquake for an event?",
+      answer: "To book Brassquake, please fill out the contact form on this page or email us directly at brassquakegw@gmail.com. We'll get back to you as soon as possible to discuss your event details."
+    },
+    {
+      question: "What types of performances do you offer?",
+      answer: "We offer performances for various events including school functions, community gatherings, weddings, corporate events, and more. Our repertoire includes classical works, modern arrangements, film scores, and popular music."
+    },
+    {
+      question: "Do you perform for private events?",
+      answer: "Yes, we perform for a variety of events including private parties, weddings, corporate functions, and community celebrations. Contact us to discuss your specific needs."
+    }
+  ];
+
+  // Populate FAQ
+  for (let i = 0; i < faq.length; i++) {
+    const item = faq[i];
+    document.querySelector('#faq-section').insertAdjacentHTML('beforeend', `
+      <div class="faq-item">
+        <div class="faq-question">${item.question}</div>
+        <div class="faq-answer">${item.answer}</div>
+      </div>
+    `);
+  }
+
+  // Contact data
   let contacts = [
     {
       method: "Email: brassquakegw@gmail.com",
@@ -17,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
+  // Populate contacts
   for (let i = 0; i < contacts.length; i++) {
     const contact = contacts[i];
     const isEmail = contact.url.startsWith("mailto:");

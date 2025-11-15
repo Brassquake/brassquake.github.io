@@ -1,3 +1,0 @@
-- [x] Modify index.html to add a div for FAQ above the ul#contacts-list in the contact section.
-- [x] Update styles.css to style the FAQ div and wrapper to match the form height on the left.
-- [x] Update contacts.js to populate the FAQ with sample Q&A pairs.

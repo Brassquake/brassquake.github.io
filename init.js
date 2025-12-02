@@ -93,6 +93,16 @@ let cards = [
 
 let performances = [
     {
+        date: "December 4th, 2025",
+        location: "Dr. G.W. Williams Secondary School",
+        summary: "Winter Concert performance at our school, playing some festive music!",
+        details: "Playing 'The 12 Days Of Christmas' arranged by Bill Holcombe, come by to Dr. G.W. Williams for a great show! There are also many other ensembles performing, such as Maze, The Downbeat Dinos, and repertoire performances!",
+        status: "upcoming",
+        photos: [
+
+        ],
+    },
+    {
         date: "October 24th, 2025",
         location: "The Residences on Yonge, 15520 Yonge St, Aurora, ON",
         summary: "One-hour performance at a retirement home along with many other amazing bands!",

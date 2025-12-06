@@ -101,6 +101,9 @@ let performances = [
         photos: [
 
         ],
+        videos: [
+
+        ],
     },
     {
         date: "October 24th, 2025",

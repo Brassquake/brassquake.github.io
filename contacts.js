@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
       answer: "We offer performances for various events including school functions, community gatherings, weddings, corporate events, and more. Our repertoire includes classical works, modern arrangements, film scores, and popular music."
     },
     {
-      question: "Do you perform for private events?",
-      answer: "Yes, we perform for a variety of events including private parties, weddings, corporate functions, and community celebrations. Contact us to discuss your specific needs."
+      question: "What is your pricing like?",
+      answer: "We offer a wide range of pricing, depending on the event and situation. Please do not hesitate to contact us, as we will be more than happy to chat with you about your event and how much it would cost."
     }
   ];
 

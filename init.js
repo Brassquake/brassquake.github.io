@@ -97,7 +97,7 @@ let performances = [
         location: "Dr. G.W. Williams Secondary School",
         summary: "Winter Concert performance at our school, playing some festive music!",
         details: "Playing 'The 12 Days Of Christmas' arranged by Bill Holcombe, come by to Dr. G.W. Williams for a great show! There are also many other ensembles performing, such as Maze, The Downbeat Dinos, and repertoire performances!",
-        status: "upcoming",
+        status: "past",
         photos: [
 
         ],

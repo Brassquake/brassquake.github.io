@@ -256,6 +256,12 @@ html { font-size: 16px; }
     margin: 0 auto;
 }
 
+/* Center the last media item when there is an odd number of items */
+.performance-media-grid .media-item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+}
+
 .member-detailed-description .media-item {
     display: flex;
     flex-direction: column;

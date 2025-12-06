@@ -94,7 +94,7 @@ let cards = [
 let performances = [
     {
         date: "December 4th, 2025",
-        location: "Dr. G.W. Williams Secondary School",
+        location: "New Roads Theatre",
         summary: "Winter Concert performance at our school, playing some festive music!",
         details: "Playing 'The 12 Days Of Christmas' arranged by Bill Holcombe, come by to Dr. G.W. Williams for a great show! There are also many other ensembles performing, such as Maze, The Downbeat Dinos, and repertoire performances!",
         status: "past",
@@ -104,7 +104,7 @@ let performances = [
     },
     {
         date: "October 24th, 2025",
-        location: "The Residences on Yonge, 15520 Yonge St, Aurora, ON",
+        location: "The Residences on Yonge",
         summary: "One-hour performance at a retirement home along with many other amazing bands!",
         details: "Backed by the non-profit organization 'The Chords of Care', Brassquake performed at a retirement home, giving a great experience to everyone who attended! With new and intriguing repertoire, everyone had a great time!",
         status: "past",
@@ -172,7 +172,7 @@ let performances = [
     },  
     {
         date: "July 26th, 2025",
-        location: "Aurora Town Square & Aurora Cultural Center",
+        location: "Aurora Town Square",
         summary: "Outdoor live concert for the people of Aurora at the Aurora Town Square!",
         details: "Outdoor concert for a live audience. Playing over 30 minutes of repertoire, the people of Aurora greatly enjoyed the band and what we had to offer! We performed a variety of music from classical to modern compositions!",
         status: "past",

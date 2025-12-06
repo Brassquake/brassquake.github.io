@@ -782,8 +782,10 @@ button[type="submit"]:hover {
   }
 
   .contact-info-list {
+    flex-direction: column;
     text-align: center;
     align-items: center;
+    gap: 1rem;
   }
 }
 

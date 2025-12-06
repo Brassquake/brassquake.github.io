@@ -193,7 +193,7 @@ let performances = [
                 url: "https://www.youtube.com/embed/qZQXvDZAWew?si=eDJY13zmQoeCPPIM"
             },
             {
-                tite: "À La Claire Fontaine",
+                title: "À La Claire Fontaine",
                 url: "https://www.youtube.com/embed/JSGW0wKNEVk?si=izXXbrHactFATnSj"
             },
             {

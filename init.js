@@ -185,9 +185,21 @@ let performances = [
                 url: "https://www.youtube.com/embed/Cti8e4lQblw?si=9MUQeYpkCuFJcqni"
             },
             {
+                title: "Ode To Joy - Beethoven",
+                url: "https://www.youtube.com/embed/QxC14nz3Hdw?si=rxjHenRCYsYDX1_N"
+            },
+            {
+                title: "A Kelligrews Soirée",
+                url: "https://www.youtube.com/embed/qZQXvDZAWew?si=eDJY13zmQoeCPPIM"
+            },
+            {
+                tite: "À La Claire Fontaine",
+                url: "https://www.youtube.com/embed/JSGW0wKNEVk?si=izXXbrHactFATnSj"
+            },
+            {
                 title: "Pride and Valour - Ryan Meeboer",
                 url: "https://www.youtube.com/embed/ve_6N2liHjY?si=PD5k9QgLS-TZobs6"
-            }
+            },
         ]
     },
    

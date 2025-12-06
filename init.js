@@ -95,8 +95,8 @@ let performances = [
     {
         date: "December 4th, 2025",
         location: "New Roads Theatre",
-        summary: "Winter Concert performance at our school, playing some festive music!",
-        details: "Playing 'The 12 Days Of Christmas' arranged by Bill Holcombe, come by to Dr. G.W. Williams for a great show! There are also many other ensembles performing, such as Maze, The Downbeat Dinos, and repertoire performances!",
+        summary: "Winter Concert performance at the New Roads Theatre in Newmarket, playing some festive music!",
+        details: "Playing 'The 12 Days Of Christmas' arranged by Bill Holcombe, there was a great show at the New Roads Theatre! There were also many other ensembles performing, such as Maze, The Downbeat Dinos, and repertoire performances!",
         status: "past",
         photos: [
 

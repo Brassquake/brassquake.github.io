@@ -99,10 +99,17 @@ let performances = [
         details: "Playing 'The 12 Days Of Christmas' arranged by Bill Holcombe, there was a great show at the New Roads Theatre! There were also many other ensembles performing, such as Maze, The Downbeat Dinos, and repertoire performances!",
         status: "past",
         photos: [
+            {
+                title: "Performance Done!",
+                file: "images/standingwinterconcert.jpg",
+            }
 
         ],
         videos: [
-
+            {
+                title: "The 12 Days Of Christmas - Bill Holcombe",
+                url: "https://www.youtube.com/embed/hFeYe3W4uUc?si=oOt1lFef4X_j1RbW"
+            }
         ],
     },
     {

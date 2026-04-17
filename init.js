@@ -184,7 +184,7 @@ let performances = [
         date: "July 26th, 2025",
         location: "Aurora Town Square",
         summary: "Outdoor live concert for the people of Aurora at the Aurora Town Square!",
-        details: "Outdoor concert for a live audience. Playing over 30 minutes of repertoire, the people of Aurora greatly enjoyed the band and what we had to offer! We performed a variety of music from classical to modern compositions!",
+        details: "Outdoor concert for a live audience. Playing over 30 minutes of repertoire, the people of Aurora greatly enjoyed the band and what we had to offer! We performed a variety of music from classical to modern compositions! Special thanks to Darya T. for filling in for Arwen on the French Horn at this performance!",
         status: "past",
         videos: [
             {

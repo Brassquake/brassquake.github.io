@@ -93,6 +93,25 @@ let cards = [
 
 let performances = [
     {
+        date: "June 3rd, 2026",
+        location: "Dr. G.W. Williams Secondary School",
+        summary: "Spring Concert performance at Dr. G.W. Williams Secondary School, playing music from La La Land!",
+        details: "For the spring concert at Dr. G.W. Williams Secondary School, Brassquake performed music from 'La La Land' for a live audience at school! the performance brought a fun movie-musical sound to the concert!",
+        status: "past",
+        photos: [
+            {
+                title: "[PLACEHOLDER]",
+                file: "[PLACEHOLDER]",
+            }
+        ],
+        videos: [
+            {
+                title: "[PLACEHOLDER]",
+                url: "[PLACEHOLDER]"
+            }
+        ],
+    },
+    {
         date: "December 4th, 2025",
         location: "New Roads Theatre",
         summary: "Winter Concert performance at the New Roads Theatre in Newmarket, playing some festive music!",

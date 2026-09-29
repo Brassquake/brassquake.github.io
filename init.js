@@ -106,7 +106,7 @@ let performances = [
         ],
         videos: [
             {
-                title: "[PLACEHOLDER]",
+                title: "La La Land - Justin Hurwitz",
                 url: "[PLACEHOLDER]"
             }
         ],

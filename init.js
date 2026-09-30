@@ -82,7 +82,7 @@ let performances = [
         videos: [
             {
                 title: "La La Land - Justin Hurwitz",
-                url: "[PLACEHOLDER]"
+                url: "https://www.youtube.com/embed/Rs1Ba60voE8?si=KaW5DYdMXyZRBkio"
             }
         ],
     },

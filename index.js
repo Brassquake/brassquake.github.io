@@ -1,380 +1,273 @@
-let page = "home";
-const url = new URLSearchParams(window.location.search);
+/* =========================================================
+   Brassquake - index.js
+   Routing, pop-out menu, contact form, performance search/sort
+   ========================================================= */
+
+/* ---------- Routing ---------- */
+
+// Detail pages: which URL parameter picks the item, and which list page they belong to
+const DETAIL_PAGES = {
+    'member-detail-page': { param: 'member', listPage: 'members' },
+    'performance-detail-page': { param: 'performance', listPage: 'performances' }
+};
 
 function changePage(section) {
-    if(section !== "") {
-        //Update URL without reloading
-        window.location.search = section;
-        window.history.pushState({}, '', `${window.location.pathname}?${url}`);
+    if (section) {
+        try {
+            // Update the URL without reloading the page
+            window.history.pushState({}, '', `${window.location.pathname}?${section}`);
+        } catch (error) {
+            // Some browsers block pushState when the site is opened straight from a file:// path.
+            // Fall back to a normal navigation; the page reads the URL when it loads.
+            window.location.search = section;
+            return;
+        }
     }
     updatePage();
+    window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
 function updatePage() {
-    const url = new URLSearchParams(window.location.search);
-    const page = url.get('page') || 'home';
-    const logo = document.querySelector('.logo');
-    const subtitle = document.querySelector('.subtitle');
-    const logoImage = document.querySelector('.logo-image');
-    
-    if (page === 'home') {
-        logo.classList.remove('small');
-        subtitle.classList.remove('small');
-        logoImage.classList.remove('small');
-    } else {
-        logo.classList.add('small');
-        subtitle.classList.add('small');
-        logoImage.classList.add('small');
+    const params = new URLSearchParams(window.location.search);
+    let page = params.get('page') || 'home';
+    let detail = null;
+    const detailInfo = DETAIL_PAGES[page];
+
+    // A detail page with a missing/invalid item falls back to its list page
+    if (detailInfo) {
+        detail = document.getElementById(`${params.get(detailInfo.param)}-detail`);
+        if (!detail) page = detailInfo.listPage;
     }
 
-    // Clear all sections
-    document.querySelectorAll('main>.section').forEach(sec => sec.classList.add('hidden'));
-
-    // Show main page section
-    const mainSection = document.getElementById(page);
-    if (mainSection) {
-        mainSection.classList.remove('hidden');
+    const sections = Array.from(document.querySelectorAll('#page > .section'));
+    let mainSection = sections.find(sec => sec.id === page);
+    if (!mainSection) {
+        page = 'home';
+        mainSection = sections.find(sec => sec.id === 'home');
     }
 
-    // Initialize search and sort for performances page
+    // Header shrinks on every page except home
+    const isHome = page === 'home';
+    document.querySelector('.logo')?.classList.toggle('small', !isHome);
+    document.querySelector('.subtitle')?.classList.toggle('small', !isHome);
+    document.querySelector('.logo-image')?.classList.toggle('small', !isHome);
+
+    // Hide every page, and every member/performance detail inside the detail pages
+    sections.forEach(sec => sec.classList.add('hidden'));
+    document
+        .querySelectorAll('#member-detail-page .section, #performance-detail-page .section')
+        .forEach(sec => sec.classList.add('hidden'));
+
+    if (mainSection) mainSection.classList.remove('hidden');
+    if (detail) detail.classList.remove('hidden');
+
     if (page === 'performances') {
         initializeSearchAndSort();
     }
 
-    // Show member detail section
-    if (page === 'member-detail-page' && url.get('member')) {
-        const memberSection = document.getElementById(`${url.get("member")}-detail`);
-        if (memberSection) {
-            memberSection.classList.remove('hidden');
-        }
-    }
-
-    // Show performance detail section
-    if (page === 'performance-detail-page' && url.get('performance')) {
-        const perfSection = document.getElementById(`${url.get("performance")}-detail`);
-        if (perfSection) {
-            perfSection.classList.remove('hidden');
-        }
-    }
-
-    // Highlight active nav button
-    document.querySelectorAll("nav a").forEach(link => {
-        link.classList.remove('active');
-        if (link.textContent.toLowerCase() === page) {
-            link.classList.add('active');
+    // Highlight the active nav link (detail pages highlight their list page)
+    const activeNav = detail ? detailInfo.listPage : page;
+    document.querySelectorAll('nav a').forEach(link => {
+        const isActive = link.textContent.trim().toLowerCase() === activeNav;
+        link.classList.toggle('active', isActive);
+        if (isActive) {
+            link.setAttribute('aria-current', 'page');
+        } else {
+            link.removeAttribute('aria-current');
         }
     });
 }
 
-//Turns button to active class when clicked
-document.querySelectorAll("nav a").forEach(link => {
-    link.addEventListener('click', function(e) {
-        document.querySelectorAll("nav a").forEach(navLink => {
-            navLink.classList.remove('active');
-        });
-        this.classList.add('active');
-    });
+// Browser back/forward buttons
+window.addEventListener('popstate', updatePage);
+
+// Links with href="#" run their onclick handler but should not jump or add "#" to the URL
+document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href="#"]');
+    if (link) e.preventDefault();
 });
 
-// Menu toggle for compact header (appended to avoid interfering with existing DOMContentLoaded handlers)
-document.addEventListener('DOMContentLoaded', () => {
-  const menuButton = document.getElementById('menu-toggle');
-  const headerEl = document.querySelector('header');
-  const siteNav = document.getElementById('site-nav');
+/* ---------- Pop-out menu ---------- */
 
-  if (menuButton && headerEl && siteNav) {
-    // start in compact mode on small screens
-    siteNav.classList.add('compact');
-
-    // helper state
-    let closeTimer = null;
+function initMenu() {
+    const menuButton = document.getElementById('menu-toggle');
+    const headerEl = document.querySelector('header');
+    const siteNav = document.getElementById('site-nav');
+    if (!menuButton || !headerEl || !siteNav) return;
 
     const links = Array.from(siteNav.querySelectorAll('a'));
-  const linkStagger = 40; // ms per link
-  const transformDuration = 500; // set open/close to 500ms
 
-    // detect reduced-motion preference
-    const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // Each link gets an index so the CSS can stagger their entrance
+    links.forEach((link, i) => link.style.setProperty('--i', i));
 
-    function setMainAriaHidden(hidden) {
-      const main = document.querySelector('main');
-      if (main) main.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+    const isOpen = () => headerEl.classList.contains('nav-open');
+
+    function setOpen(open, { focusFirstLink = false, returnFocus = false } = {}) {
+        headerEl.classList.toggle('nav-open', open);
+        menuButton.setAttribute('aria-expanded', String(open));
+        if (open && focusFirstLink && links[0]) links[0].focus();
+        if (!open && returnFocus) menuButton.focus();
     }
 
-    // Focus management: remember prior focus and focus first nav link on open
-    let previousFocus = null;
+    menuButton.setAttribute('aria-expanded', 'false');
 
-    function openMenu() {
-      // clear any pending close
-      if (closeTimer) {
-        clearTimeout(closeTimer);
-        closeTimer = null;
-      }
-      // reset any inline transition overrides so CSS defaults apply
-      siteNav.style.transition = '';
-
-  // ensure any inline collapse styles are cleared so CSS open animation runs
-  siteNav.style.transform = '';
-  siteNav.style.opacity = '';
-  siteNav.style.background = '';
-  siteNav.style.boxShadow = '';
-
-  headerEl.classList.add('nav-open');
-      menuButton.setAttribute('aria-expanded', 'true');
-
-  // accessibility: hide main content from assistive tech while menu is open
-  setMainAriaHidden(true);
-
-  // focus trap: move focus to first link
-  previousFocus = document.activeElement;
-  if (links[0]) links[0].focus();
-
-      // ensure links are visible and arranged (forward stagger left-to-right)
-      links.forEach((a, i) => {
-        // clear any inline transition overrides from previous close
-        a.style.transition = '';
-        a.style.transitionDelay = `${i * linkStagger}ms`;
-        a.style.transform = `translateX(0)`;
-        a.style.opacity = '1';
-      });
-    }
-
-    function closeMenu() {
-      // compute menu button center
-      const menuRect = menuButton.getBoundingClientRect();
-      const menuCenterX = menuRect.left + menuRect.width / 2;
-
-      // compute link centers and sort right-to-left so they flow back into the button
-      const linksWithPos = links.map(a => {
-        const r = a.getBoundingClientRect();
-        return { el: a, cx: r.left + r.width / 2 };
-      }).sort((a, b) => b.cx - a.cx); // rightmost first
-
-      // apply staggered delays in right-to-left order and move each link toward the menu button
-      linksWithPos.forEach((item, idx) => {
-        const dx = Math.round(menuCenterX - item.cx);
-        // during close, increase link transition duration to match transformDuration so the motion is slower
-        item.el.style.transition = `opacity ${transformDuration}ms ease, transform ${transformDuration}ms ease`;
-        item.el.style.transitionDelay = `${idx * linkStagger}ms`;
-        item.el.style.transform = `translateX(${dx}px)`;
-        item.el.style.opacity = '0';
-      });
-
-      // after the last link's delay + transform duration, hide the overlay and clear inline styles
-      const maxDelay = (linksWithPos.length - 1) * linkStagger;
-      const totalCloseTime = maxDelay + transformDuration;
-
-  // override siteNav transitions so the overlay collapse spans the full close time
-  siteNav.style.transition = `opacity ${totalCloseTime}ms cubic-bezier(.2,.8,.2,1), transform ${totalCloseTime}ms cubic-bezier(.2,.8,.2,1), background ${Math.min(totalCloseTime, 320)}ms ease, box-shadow ${Math.min(totalCloseTime, 320)}ms ease`;
-
-  // start the overlay collapse by setting inline styles (inline styles take precedence
-  // and will animate using the transition we just set). This keeps the overlay visible
-  // while links are animating into the button.
-  // collapsed state: slightly offset and scaled to zero
-  siteNav.style.transform = 'translateX(-8px) scaleX(0)';
-  siteNav.style.opacity = '0';
-  siteNav.style.background = 'rgba(0,0,0,0)';
-  siteNav.style.boxShadow = '0 4px 20px rgba(0,0,0,0.0)';
-
-  // Immediately update the header state so the icon reverts right away while the
-  // overlay continues its collapse animation. Add a 'nav-closing' class so
-  // the CSS keeps the overlay visible while it collapses back toward the
-  // menu button. Accessibility state (aria-hidden) and focus will be restored
-  // after the visual animation completes below.
-  headerEl.classList.add('nav-closing');
-  if (headerEl.classList.contains('nav-open')) {
-    headerEl.classList.remove('nav-open');
-  }
-  menuButton.setAttribute('aria-expanded', 'false');
-
-      closeTimer = setTimeout(() => {
-        // clear inline styles so CSS returns to base state
-        links.forEach(a => {
-          a.style.transitionDelay = '';
-          a.style.transform = '';
-          a.style.opacity = '';
-          a.style.transition = '';
-        });
-
-  // clear our inline transition override as well
-  siteNav.style.transition = '';
-        // also clear any inline overlay collapse styles so the nav returns to stylesheet control
-        siteNav.style.transform = '';
-        siteNav.style.opacity = '';
-        siteNav.style.background = '';
-        siteNav.style.boxShadow = '';
-
-  // accessibility: restore main content visibility to assistive tech
-  setMainAriaHidden(false);
-
-  // remove the temporary closing class so CSS returns to the base collapsed state
-  headerEl.classList.remove('nav-closing');
-
-        // restore focus
-        if (previousFocus && typeof previousFocus.focus === 'function') {
-          previousFocus.focus();
-        }
-
-        closeTimer = null;
-      }, totalCloseTime + 20);
-    }
-
-    menuButton.addEventListener('click', () => {
-      if (headerEl.classList.contains('nav-open')) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
+    menuButton.addEventListener('click', (e) => {
+        // e.detail === 0 means the click came from the keyboard
+        setOpen(!isOpen(), { focusFirstLink: e.detail === 0 });
     });
 
-    // Close menu when any nav link is clicked (animate links back into the menu button)
-    links.forEach(a => {
-      a.addEventListener('click', (e) => {
-        // allow link navigation but animate close first; small delay before navigation will keep UX smooth
-        closeMenu();
-      });
-    });
+    links.forEach(link => link.addEventListener('click', () => setOpen(false)));
 
-    // Close with Escape key
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' || e.key === 'Esc') {
-        if (headerEl.classList.contains('nav-open')) {
-          closeMenu();
-        }
-      }
+        if (e.key === 'Escape' && isOpen()) setOpen(false, { returnFocus: true });
     });
-  }
-});
 
-function showMemberDetail(memberName) {
-    const detailSection = document.getElementById(memberName + '-detail');
-    if (detailSection) {
-        // Hide all sections
-        const sections = document.querySelectorAll('.section');
-        sections.forEach(section => {
-            section.classList.add('hidden');
-        });
-        
-        // Show the member detail
-        detailSection.classList.remove('hidden');
-    }
+    // Click outside closes the menu
+    document.addEventListener('click', (e) => {
+        if (isOpen() && !siteNav.contains(e.target) && !menuButton.contains(e.target)) {
+            setOpen(false);
+        }
+    });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("contact-form");
+/* ---------- Contact form ---------- */
 
-  if (form) {
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
+function initContactForm() {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
 
-      const formData = new FormData(form);
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitButton = form.querySelector('button[type="submit"]');
+        if (submitButton) submitButton.disabled = true;
 
-      fetch("https://formspree.io/f/xblzywbj", {
-        method: "POST",
-        body: formData,
-        headers: {
-          Accept: "application/json"
+        try {
+            const response = await fetch('https://formspree.io/f/xblzywbj', {
+                method: 'POST',
+                body: new FormData(form),
+                headers: { Accept: 'application/json' }
+            });
+
+            if (response.ok) {
+                alert("Thanks for your message! We'll get back to you soon.");
+                form.reset();
+            } else {
+                const data = await response.json().catch(() => ({}));
+                alert(data.error || 'Oops! Something went wrong.');
+            }
+        } catch (error) {
+            alert('Network error: ' + error.message);
+        } finally {
+            if (submitButton) submitButton.disabled = false;
         }
-      }).then(response => {
-        if (response.ok) {
-          alert("Thanks for your message! We'll get back to you soon.");
-          form.reset();
-        } else {
-          response.json().then(data => {
-            alert(data.error || "Oops! Something went wrong.");
-          });
-        }
-      }).catch(error => {
-        alert("Network error: " + error.message);
-      });
     });
-  }
-});
+}
 
-// Search and sort functionality for performances
+/* ---------- Performances: search and sort ---------- */
+
+// Set once the search/sort controls are wired up, so revisiting the page does not add duplicate listeners
+let applyPerformanceFilters = null;
+
 function initializeSearchAndSort() {
+    if (applyPerformanceFilters) {
+        applyPerformanceFilters();
+        return;
+    }
+
     const searchBar = document.getElementById('performance-search');
-    const searchIcon = document.querySelector('.search-icon');
     const sortButton = document.getElementById('sort-button');
     const sortMenu = document.getElementById('sort-menu');
-    const sortOptions = document.querySelectorAll('.sort-option');
+    const sortOptions = Array.from(document.querySelectorAll('.sort-option'));
+    if (!searchBar || !sortButton || !sortMenu) return;
 
-    let currentSort = 'newest'; // Default sort
+    let currentSort = 'newest';
 
-    // Function to filter and sort performances
+    function markSelectedOption() {
+        sortOptions.forEach(option => {
+            const selected = option.getAttribute('data-sort') === currentSort;
+            option.classList.toggle('is-selected', selected);
+            option.setAttribute('aria-selected', String(selected));
+        });
+    }
+
+    function setMenuOpen(open) {
+        sortMenu.classList.toggle('hidden', !open);
+        sortButton.setAttribute('aria-expanded', String(open));
+    }
+
     function filterAndSortPerformances() {
         const searchTerm = searchBar.value.toLowerCase();
+
         let filtered = performances.filter(perf =>
             perf.location.toLowerCase().includes(searchTerm) ||
             perf.date.toLowerCase().includes(searchTerm) ||
             (perf.summary && perf.summary.toLowerCase().includes(searchTerm))
         );
 
-        // Apply sort-specific filtering
         if (currentSort === 'upcoming') {
             filtered = filtered.filter(perf => perf.status === 'upcoming');
         } else if (currentSort === 'previous') {
             filtered = filtered.filter(perf => perf.status === 'past');
         }
 
-        // Sort the filtered performances
         filtered.sort((a, b) => {
-            const dateA = new Date(a.date.replace(/(\d+)(st|nd|rd|th)/, '$1'));
-            const dateB = new Date(b.date.replace(/(\d+)(st|nd|rd|th)/, '$1'));
+            const dateA = parsePerformanceDate(a.date);
+            const dateB = parsePerformanceDate(b.date);
 
             switch (currentSort) {
-                case 'newest':
-                    return dateB - dateA; // Newest first
                 case 'oldest':
-                    return dateA - dateB; // Oldest first
                 case 'upcoming':
-                    return dateA - dateB; // Earliest upcoming first
+                    return dateA - dateB; // earliest first
+                case 'newest':
                 case 'previous':
-                    return dateB - dateA; // Newest past first
                 default:
-                    return 0;
+                    return dateB - dateA; // latest first
             }
         });
 
-        const message = currentSort === 'upcoming' && filtered.length === 0 ? 'Nothing To See Here!' : '';
-        makePerformances(filtered, message);
-        requestAnimationFrame(() => {
-            alignPerformanceText();
-        });
+        makePerformances(filtered, filtered.length === 0 ? 'Nothing To See Here!' : '');
+        requestAnimationFrame(alignPerformanceText);
     }
 
-    // Search input event
+    applyPerformanceFilters = filterAndSortPerformances;
+
     searchBar.addEventListener('input', filterAndSortPerformances);
 
-    // Search icon click event (optional, since input already triggers on typing)
-    if (searchIcon) {
-        searchIcon.addEventListener('click', () => {
-            searchBar.focus(); // Focus the search bar when icon is clicked
-        });
-    }
-
-    // Sort button toggle
-    sortButton.addEventListener('click', function() {
-        sortMenu.classList.toggle('hidden');
+    // The filter button opens/closes the sort menu
+    sortButton.addEventListener('click', () => {
+        setMenuOpen(sortMenu.classList.contains('hidden'));
     });
 
-    // Sort option selection
     sortOptions.forEach(option => {
-        option.addEventListener('click', function() {
-            currentSort = this.getAttribute('data-sort');
-            sortButton.textContent = this.textContent;
-            sortMenu.classList.add('hidden');
+        option.addEventListener('click', () => {
+            currentSort = option.getAttribute('data-sort');
+            markSelectedOption();
+            setMenuOpen(false);
             filterAndSortPerformances();
         });
     });
 
-    // Close sort menu when clicking outside
-    document.addEventListener('click', function(event) {
+    // Close the menu when clicking outside or pressing Escape
+    document.addEventListener('click', (event) => {
         if (!sortButton.contains(event.target) && !sortMenu.contains(event.target)) {
-            sortMenu.classList.add('hidden');
+            setMenuOpen(false);
         }
     });
 
-    // Initial render
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !sortMenu.classList.contains('hidden')) {
+            setMenuOpen(false);
+            sortButton.focus();
+        }
+    });
+
+    markSelectedOption();
     filterAndSortPerformances();
 }
+
+/* ---------- Start-up ---------- */
+
+document.addEventListener('DOMContentLoaded', () => {
+    initMenu();
+    initContactForm();
+});

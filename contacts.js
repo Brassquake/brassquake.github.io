@@ -1,6 +1,10 @@
+/* =========================================================
+   Brassquake - contacts.js
+   FAQ and contact list on the Contact page
+   ========================================================= */
+
 document.addEventListener("DOMContentLoaded", () => {
-  // FAQ data
-  let faq = [
+  const faq = [
     {
       question: "How can I book Brassquake for an event?",
       answer: "To book Brassquake, please fill out the contact form on this page or email us directly at brassquakegw@gmail.com. We'll get back to you as soon as possible to discuss your event details."
@@ -15,19 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
-  // Populate FAQ
-  for (let i = 0; i < faq.length; i++) {
-    const item = faq[i];
-    document.querySelector('#faq-section').insertAdjacentHTML('beforeend', `
-      <div class="faq-item">
-        <div class="faq-question">${item.question}</div>
-        <div class="faq-answer">${item.answer}</div>
-      </div>
-    `);
-  }
-
-  // Contact data
-  let contacts = [
+  const contacts = [
     {
       method: "Email: brassquakegw@gmail.com",
       url: "mailto:brassquakegw@gmail.com",
@@ -42,22 +34,36 @@ document.addEventListener("DOMContentLoaded", () => {
       method: "Instagram - @brassquake",
       url: "https://www.instagram.com/brassquake?igsh=OGw0cXkyOG1xamZ2",
       icon: "images/instagram.png"
-    },
+    }
   ];
 
-  // Populate contacts
-  for (let i = 0; i < contacts.length; i++) {
-    const contact = contacts[i];
-    const isEmail = contact.url.startsWith("mailto:");
+  const faqSection = document.querySelector("#faq-section");
+  if (faqSection) {
+    for (const item of faq) {
+      faqSection.insertAdjacentHTML("beforeend", `
+        <div class="faq-item">
+          <div class="faq-question">${item.question}</div>
+          <div class="faq-answer">${item.answer}</div>
+        </div>
+      `);
+    }
+  }
 
-    document.querySelector('#contacts-list').insertAdjacentHTML('beforeend', `
-      <li>
-        <img src="${contact.icon}" alt="${contact.method}">
-        ${isEmail
-          ? `<span>${contact.method}</span>`
-          : `<a href="${contact.url}" target="_blank" title="${contact.method}">${contact.method}</a>`
-        }
-      </li>
-    `);
+  const contactsList = document.querySelector("#contacts-list");
+  if (contactsList) {
+    for (const contact of contacts) {
+      const isEmail = contact.url.startsWith("mailto:");
+
+      // The icon is decorative (the text beside it says the same thing), so its alt text is empty
+      contactsList.insertAdjacentHTML("beforeend", `
+        <li>
+          <img src="${contact.icon}" alt="">
+          ${isEmail
+            ? `<span>${contact.method}</span>`
+            : `<a href="${contact.url}" target="_blank" rel="noopener noreferrer" title="${contact.method}">${contact.method}</a>`
+          }
+        </li>
+      `);
+    }
   }
 });

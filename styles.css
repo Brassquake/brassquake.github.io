@@ -464,15 +464,6 @@ header.nav-open #site-nav a {
 }
 
 /* ---------- Layout containers ---------- */
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-    background: rgba(43, 27, 63, 0.4);
-    position: relative;
-    z-index: 1;
-}
-
 .section {
     position: relative;
     z-index: 1;
@@ -527,7 +518,7 @@ header.nav-open #site-nav a {
     to   { opacity: 1; transform: none; }
 }
 
-main > .section:not(.hidden) {
+#page > .section:not(.hidden) {
     animation: sectionIn 0.55s var(--ease) both;
 }
 
@@ -658,16 +649,22 @@ h2::after {
 }
 
 .performance-card .image-container {
-    display: block;
-    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    min-height: 160px;
     aspect-ratio: auto;
     background: linear-gradient(135deg, rgba(106, 63, 140, 0.6), rgba(43, 27, 63, 0.9));
 }
 
-.performance-image {
+/* Full image, never cropped: width fits the card, height follows the photo's own proportions */
+.performance-card .performance-image {
     display: block;
     width: 100%;
-    height: 100%;
+    height: auto;
+    object-fit: contain;
+    object-position: center;
 }
 
 .status-tag {
@@ -704,124 +701,286 @@ h2::after {
     padding: 2rem 0;
 }
 
-/* ---------- Search and sort ---------- */
+/* ---------- Search bar (glowing style, sort menu built in) ---------- */
 .search-sort-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    gap: 1rem;
-    margin: 1rem 0 1.5rem;
+    margin: 1rem 0 2.5rem;
+    padding: 0.5rem;
 }
 
-.search-container {
-    display: flex;
-    align-items: center;
-    flex: 1 1 280px;
-    max-width: 440px;
-    overflow: hidden;
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px solid rgba(255, 215, 0, 0.45);
-    border-radius: 999px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
-}
+.sb {
+    /* Colour tokens: swap these to recolour the whole bar */
+    --sb-bg: #0c0714;
+    --sb-a: #7c4dcc;
+    --sb-a-dark: #3a2170;
+    --sb-a-light: #c9b3f0;
+    --sb-b: #ffc400;
+    --sb-b-dark: #7a5200;
+    --sb-b-light: #ffe27a;
 
-.search-container:hover {
-    border-color: rgba(255, 215, 0, 0.8);
-}
-
-.search-container:focus-within {
-    border-color: var(--gold);
-    background: rgba(0, 0, 0, 0.38);
-    box-shadow: 0 0 0 4px rgba(255, 215, 0, 0.16), 0 10px 26px rgba(0, 0, 0, 0.3);
-}
-
-.search-icon {
+    position: relative;
+    z-index: 30;
+    isolation: isolate;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 0 0 auto;
-    width: 48px;
-    height: 46px;
-    color: var(--gold);
-    background: none;
-    border: 0;
-    cursor: text;
-    transition: color 0.3s ease, transform 0.3s var(--ease);
+    width: min(100%, 320px);
+    height: 70px;
 }
 
-.search-icon svg,
-.search-icon img {
-    width: 20px;
-    height: 20px;
+/* Glow / border layers (centred behind the input) */
+.sb-glow,
+.sb-dark,
+.sb-white,
+.sb-border {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: 12px;
+    filter: blur(3px);
 }
 
-.search-container:focus-within .search-icon {
-    color: var(--gold-soft);
-    transform: scale(1.1);
+.sb-dark   { width: calc(100% - 8px);  height: 65px; }
+.sb-white  { width: calc(100% - 13px); height: 63px; border-radius: 10px; filter: blur(2px); }
+.sb-border { width: calc(100% - 17px); height: 59px; border-radius: 11px; filter: blur(0.5px); }
+.sb-glow   { width: calc(100% + 34px); height: 130px; filter: blur(30px); opacity: 0.4; }
+
+.sb-glow::before,
+.sb-dark::before,
+.sb-white::before,
+.sb-border::before {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    height: 600px;
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    transition: all 2s;
 }
 
-.search-bar {
-    flex: 1;
-    min-width: 0;
-    padding: 0.7rem 1.2rem 0.7rem 0;
+.sb-glow::before {
+    width: 999px;
+    height: 999px;
+    transform: translate(-50%, -50%) rotate(60deg);
+    background-image: conic-gradient(
+        #000,
+        var(--sb-a) 5%,
+        #000 38%,
+        #000 50%,
+        var(--sb-b) 60%,
+        #000 87%
+    );
+}
+
+.sb-dark::before {
+    transform: translate(-50%, -50%) rotate(82deg);
+    background-image: conic-gradient(
+        rgba(0, 0, 0, 0),
+        var(--sb-a-dark),
+        rgba(0, 0, 0, 0) 10%,
+        rgba(0, 0, 0, 0) 50%,
+        var(--sb-b-dark),
+        rgba(0, 0, 0, 0) 60%
+    );
+}
+
+.sb-white::before {
+    transform: translate(-50%, -50%) rotate(83deg);
+    filter: brightness(1.4);
+    background-image: conic-gradient(
+        rgba(0, 0, 0, 0) 0%,
+        var(--sb-a-light),
+        rgba(0, 0, 0, 0) 8%,
+        rgba(0, 0, 0, 0) 50%,
+        var(--sb-b-light),
+        rgba(0, 0, 0, 0) 58%
+    );
+}
+
+.sb-border::before {
+    transform: translate(-50%, -50%) rotate(70deg);
+    filter: brightness(1.3);
+    background-image: conic-gradient(
+        #1a1224,
+        var(--sb-a) 5%,
+        #1a1224 14%,
+        #1a1224 50%,
+        var(--sb-b) 60%,
+        #1a1224 64%
+    );
+}
+
+/* The light sweeps around the bar on hover and while typing */
+.sb:hover > .sb-dark::before   { transform: translate(-50%, -50%) rotate(-98deg); }
+.sb:hover > .sb-glow::before   { transform: translate(-50%, -50%) rotate(-120deg); }
+.sb:hover > .sb-white::before  { transform: translate(-50%, -50%) rotate(-97deg); }
+.sb:hover > .sb-border::before { transform: translate(-50%, -50%) rotate(-110deg); }
+
+.sb:focus-within > .sb-dark::before   { transform: translate(-50%, -50%) rotate(442deg); transition: all 4s; }
+.sb:focus-within > .sb-glow::before   { transform: translate(-50%, -50%) rotate(420deg); transition: all 4s; }
+.sb:focus-within > .sb-white::before  { transform: translate(-50%, -50%) rotate(443deg); transition: all 4s; }
+.sb:focus-within > .sb-border::before { transform: translate(-50%, -50%) rotate(430deg); transition: all 4s; }
+
+/* Input */
+.sb-main {
+    position: relative;
+    width: calc(100% - 19px);
+    height: 56px;
+}
+
+.sb .sb-input {
+    width: 100%;
+    height: 56px;
+    padding: 0 59px;
+    background: var(--sb-bg);
     border: none;
-    border-radius: 0;
-    font-size: 1rem;
-    font-family: inherit;
-    background: transparent;
-    color: var(--text);
+    border-radius: 10px;
+    box-shadow: none;
+    color: #fff;
+    font-size: 18px;
     -webkit-appearance: none;
     appearance: none;
 }
 
-.search-bar::placeholder {
-    color: rgba(244, 240, 250, 0.55);
+.sb .sb-input::placeholder {
+    color: #c0b9c0;
 }
 
-.search-bar:focus {
+.sb .sb-input:hover,
+.sb .sb-input:focus {
     outline: none;
-    background: transparent;
+    background: var(--sb-bg);
+    box-shadow: none;
 }
 
-.sort-container {
-    position: relative;
+.sb-input-mask {
+    position: absolute;
+    top: 18px;
+    left: 70px;
+    width: 100px;
+    height: 20px;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, var(--sb-bg));
 }
 
-.sort-button {
-    padding: 0.65rem 1.35rem;
-    background: var(--gradient-accent);
-    color: #1c1129;
-    border: none;
-    border-radius: 999px;
-    font-size: 0.95rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
+.sb-main:focus-within > .sb-input-mask {
+    display: none;
+}
+
+.sb-tint {
+    position: absolute;
+    top: 10px;
+    left: 5px;
+    width: 30px;
+    height: 20px;
+    pointer-events: none;
+    background: var(--sb-b);
+    filter: blur(20px);
+    opacity: 0.8;
+    transition: all 2s;
+}
+
+.sb-main:hover > .sb-tint {
+    opacity: 0;
+}
+
+.sb-search-icon {
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    pointer-events: none;
+}
+
+/* Filter button (opens the sort menu) */
+@keyframes sbRotate {
+    100% { transform: translate(-50%, -50%) rotate(450deg); }
+}
+
+.sb-filter-border {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    width: 40px;
+    height: 42px;
+    overflow: hidden;
+    border-radius: 10px;
+    pointer-events: none;
+}
+
+.sb-filter-border::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    height: 600px;
+    transform: translate(-50%, -50%) rotate(90deg);
+    background-repeat: no-repeat;
+    background-position: 0 0;
+    filter: brightness(1.35);
+    background-image: conic-gradient(
+        rgba(0, 0, 0, 0),
+        #6b5a8a,
+        rgba(0, 0, 0, 0) 50%,
+        rgba(0, 0, 0, 0) 50%,
+        #6b5a8a,
+        rgba(0, 0, 0, 0) 100%
+    );
+    animation: sbRotate 4s linear infinite;
+}
+
+.sb-filter {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 40px;
+    padding: 0;
+    isolation: isolate;
+    overflow: hidden;
+    background: linear-gradient(180deg, #1a1030, #07040c, #2a1748);
+    border: 1px solid transparent;
+    border-radius: 10px;
     cursor: pointer;
-    box-shadow: 0 6px 16px rgba(255, 107, 53, 0.25);
-    transition: transform 0.25s var(--ease), box-shadow 0.25s ease, filter 0.25s ease;
+    transition: transform 0.25s var(--ease), box-shadow 0.3s ease;
 }
 
-.sort-button:hover {
-    color: #1c1129;
-    background: var(--gradient-accent);
-    filter: brightness(1.08);
-    transform: translateY(-2px);
-    box-shadow: 0 10px 22px rgba(255, 215, 0, 0.35);
+.sb-filter:hover {
+    transform: scale(1.06);
+    box-shadow: 0 0 14px rgba(255, 196, 0, 0.35);
 }
 
-.sort-button:active {
-    transform: translateY(0);
+.sb-filter[aria-expanded="true"] {
+    box-shadow: 0 0 0 1px var(--gold), 0 0 16px rgba(255, 196, 0, 0.35);
 }
 
+.sb-filter svg {
+    width: 27px;
+    height: 27px;
+}
+
+/* Sort menu (drops down from the filter button) */
 .sort-menu {
     position: absolute;
-    top: calc(100% + 8px);
-    left: 0;
+    top: calc(100% + 18px);
+    right: 0;
     min-width: 190px;
     padding: 0.35rem;
     z-index: 20;
-    background: rgba(28, 17, 41, 0.97);
+    background: rgba(12, 7, 20, 0.97);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     border: 1px solid var(--line-gold);
@@ -830,7 +989,7 @@ h2::after {
     opacity: 0;
     visibility: hidden;
     transform: translateY(-8px) scale(0.98);
-    transform-origin: top left;
+    transform-origin: top right;
     transition: opacity 0.25s ease, transform 0.3s var(--ease), visibility 0s linear 0.3s;
 }
 
@@ -1308,9 +1467,6 @@ html {
         padding: 1.5rem 1rem;
     }
 
-    .search-container {
-        max-width: none;
-    }
 }
 
 @media (max-width: 480px) {

@@ -97,7 +97,6 @@ let performances = [
                 title: "Performance Done!",
                 file: "images/standingwinterconcert.jpg",
             }
-
         ],
         videos: [
             {
@@ -203,7 +202,6 @@ let performances = [
             },
         ]
     },
-
     {
         date: "May 30th, 2025",
         location: "Dr. G.W. Williams Secondary School",
@@ -241,14 +239,106 @@ function getPerformanceId(perf) {
     return `${perf.location}-${perf.date}`.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
 }
 
-// "June 3rd, 2026" -> Date (used for sorting)
 function parsePerformanceDate(dateString) {
-    return new Date(dateString.replace(/(\d+)(st|nd|rd|th)/, '$1'));
+    return new Date(dateString.replace(/(\d+)(st|nd|rd|th)/, '\$1'));
 }
 
-// Entries that still hold a placeholder are skipped so they do not show broken media
 function isRealMedia(value) {
     return Boolean(value) && !String(value).includes('[PLACEHOLDER]');
+}
+
+/* ---------- Home Carousel ---------- */
+
+let carouselPhotos = [];
+let currentSlide = 0;
+let carouselInterval;
+
+function initHomeCarousel() {
+    const carouselContainer = document.querySelector('#home-carousel');
+    if (!carouselContainer) return;
+    
+    let allPhotos = [];
+    
+    // Gather all valid photos
+    performances.forEach(perf => {
+        if (perf.photos && perf.photos.length > 0) {
+            perf.photos.forEach(photo => {
+                if (isRealMedia(photo.file)) {
+                    allPhotos.push({
+                        perfId: getPerformanceId(perf),
+                        location: perf.location,
+                        title: photo.title,
+                        file: photo.file
+                    });
+                }
+            });
+        }
+    });
+
+    if (allPhotos.length === 0) {
+        carouselContainer.style.display = 'none';
+        return;
+    }
+
+    // Shuffle photos randomly
+    for (let i = allPhotos.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [allPhotos[i], allPhotos[j]] = [allPhotos[j], allPhotos[i]];
+    }
+
+    // Now uses 5 photos
+    carouselPhotos = allPhotos.slice(0, 5);
+    currentSlide = 0;
+
+    renderSlide(currentSlide);
+
+    // Arrow Click Listeners
+    document.getElementById('carousel-prev').addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentSlide = (currentSlide - 1 + carouselPhotos.length) % carouselPhotos.length;
+        renderSlide(currentSlide);
+        resetCarouselInterval();
+    });
+
+    document.getElementById('carousel-next').addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentSlide = (currentSlide + 1) % carouselPhotos.length;
+        renderSlide(currentSlide);
+        resetCarouselInterval();
+    });
+
+    // Clicking photo navigates to performance
+    document.getElementById('carousel-content').addEventListener('click', () => {
+        const photo = carouselPhotos[currentSlide];
+        changePage(`page=performance-detail-page&performance=${photo.perfId}`);
+    });
+
+    startCarouselInterval();
+}
+
+function renderSlide(index) {
+    const photo = carouselPhotos[index];
+    const imgEl = document.getElementById('carousel-image');
+    const capEl = document.getElementById('carousel-caption');
+    
+    // Swap immediately (no fade effect)
+    imgEl.src = photo.file;
+    imgEl.alt = photo.title;
+    
+    // Update caption dynamically
+    capEl.innerHTML = `<strong>${photo.title}</strong> - ${photo.location} <br><span style="font-size: 0.85em; opacity: 0.7;">(Click photo to view performance)</span>`;
+}
+
+function startCarouselInterval() {
+    carouselInterval = setInterval(() => {
+        currentSlide = (currentSlide + 1) % carouselPhotos.length;
+        renderSlide(currentSlide);
+    }, 1500); // Automatically scrolls every 1.5 seconds
+}
+
+function resetCarouselInterval() {
+    clearInterval(carouselInterval);
+    startCarouselInterval();
 }
 
 /* ---------- Members ---------- */
@@ -310,7 +400,7 @@ function makePerformances(filteredPerformances = performances, message = '') {
 
     filteredPerformances.forEach(perf => {
         const perfId = getPerformanceId(perf);
-        const imageName = perf.date.replace(/(\d+)(st|nd|rd|th)/, '$1').toLowerCase().replace(/\s+/g, '-').replace(/,/g, '');
+        const imageName = perf.date.replace(/(\d+)(st|nd|rd|th)/, '\$1').toLowerCase().replace(/\s+/g, '-').replace(/,/g, '');
 
         grid.insertAdjacentHTML('beforeend', `
             <div class="member-card performance-card" role="link" tabindex="0" onclick="changePage('page=performance-detail-page&performance=${perfId}')">
@@ -375,18 +465,13 @@ function performanceDetails() {
 
 /* ---------- Layout helpers ---------- */
 
-// Makes the name / date / summary lines the same height across each row of performance cards
 function alignPerformanceText() {
     const cardEls = Array.from(document.querySelectorAll('#performance-grid > .member-card'));
     if (!cardEls.length) return;
 
-    // Reset first so heights can shrink again after a resize
     cardEls.forEach(card => Array.from(card.children).forEach(child => { child.style.height = ''; }));
-
-    // Nothing to measure while the page is hidden
     if (!cardEls[0].offsetParent) return;
 
-    // Group cards by row (same vertical position)
     const rows = new Map();
     cardEls.forEach(card => {
         const top = Math.round(card.offsetTop);
@@ -416,9 +501,9 @@ window.addEventListener('resize', () => {
     resizeTimeout = setTimeout(alignPerformanceText, 100);
 });
 
-// Cards behave like links for keyboard users (Enter or Space)
+// Allow enter key to trigger carousel clicks too
 document.addEventListener('keydown', (e) => {
-    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.member-card[role="link"]')) {
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.member-card[role="link"], .carousel-content[role="button"]')) {
         e.preventDefault();
         e.target.click();
     }
@@ -426,6 +511,7 @@ document.addEventListener('keydown', (e) => {
 
 /* ---------- Start-up ---------- */
 
+initHomeCarousel(); 
 makeCards();
 memberDetails();
 makePerformances();

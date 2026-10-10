@@ -13,14 +13,12 @@
 
     <header role="banner">
         <button id="menu-toggle" class="menu-button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
-            <!-- Inline SVG hamburger for consistent rendering across browsers -->
             <svg class="menu-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
                 <rect class="bar bar1" x="3" y="6" width="18" height="2" rx="1"></rect>
                 <rect class="bar bar2" x="3" y="11" width="18" height="2" rx="1"></rect>
                 <rect class="bar bar3" x="3" y="16" width="18" height="2" rx="1"></rect>
             </svg>
         </button>
-        <!-- Pop-out navigation -->
         <nav id="site-nav" role="navigation" aria-label="Primary navigation">
             <ul>
                 <li><a href="?page=home" onclick="changePage('page=home'); return false;">Home</a></li>
@@ -47,14 +45,28 @@
                     <br>
                     <p>Brassquake is a brass quintet made up of five dedicated high school musicians. We perform a range of repertoire ranging from classical to contemporary arrangements, delivering engaging performances tailored for audiences of all ages.</p>
                     <br>
-                    <!-- Home image -->
-                    <div class="home-image-wrap" style="text-align:center; margin-top:1rem;">
-                        <div class="captioned-image">
-                            <img src="images/BrassquakeSeniorHomeOriginal.jpg" alt="Brassquake performing" width="65%" class="home-image" loading="lazy">
-                            <div class="caption">Brassquake performing at a local senior home in Aurora! - (October 24th, 2025)</div>
+                    
+                    <!-- Dynamic Performance Carousel -->
+                    <div class="carousel-container" id="home-carousel">
+                        <button class="carousel-arrow left" id="carousel-prev" aria-label="Previous image">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                        </button>
+                        
+                        <div class="carousel-content" id="carousel-content" role="button" tabindex="0">
+                            <img id="carousel-image" src="" alt="Brassquake Performance" loading="lazy">
                         </div>
+
+                        <button class="carousel-arrow right" id="carousel-next" aria-label="Next image">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                        </button>
                     </div>
+                    <!-- The caption changes dynamically with the photo -->
+                    <div class="carousel-caption" id="carousel-caption">
+                        <!-- Filled by init.js -->
+                    </div>
+
                     <hr>
+                    
                     <p><span class="school-name">Special thanks to the developers:</span></p>
                     <div style="font-family: Courier New, monospace; font-size: 1em;">
                         <p>
@@ -103,7 +115,6 @@
                     <p>All of our performances, listed by date!</p>
                 </div>
 
-                <!-- Clean, Glassmorphic Search Bar -->
                 <div class="search-sort-container">
                     <div class="sb">
                         <div class="sb-main">
@@ -139,7 +150,6 @@
                                 </svg>
                             </button>
 
-                            <!-- Sort menu -->
                             <div id="sort-menu" class="sort-menu hidden" role="listbox">
                                 <div class="sort-option" data-sort="newest" role="option">Newest to Oldest</div>
                                 <div class="sort-option" data-sort="oldest" role="option">Oldest to Newest</div>
@@ -166,7 +176,6 @@
 
               <div class="contact-container">
                 <div class="contact-grid">
-                  <!-- Left: Contact Form -->
                   <form id="contact-form" action="https://formspree.io/f/xblzywbj" method="POST">
                     <div class="form-group">
                       <label for="name">Name:</label>
@@ -186,7 +195,6 @@
                     <button type="submit">Send Message</button>
                   </form>
 
-                  <!-- Right: FAQ -->
                   <div class="faq-and-contacts">
                     <div id="faq-section" class="faq-section">
                       <!-- FAQ will be dynamically inserted here -->
@@ -216,7 +224,6 @@
         document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
 
-    <!-- If JavaScript is disabled, ensure nav is visible and the menu button is hidden -->
     <noscript>
         <style>
             #site-nav { visibility: visible !important; opacity: 1 !important; position: static !important; transform: none !important; }

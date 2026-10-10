@@ -19,21 +19,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
+  // Swapped out PNGs for clean, scalable inline SVGs that match your color scheme
   const contacts = [
     {
       method: "Email: brassquakegw@gmail.com",
       url: "mailto:brassquakegw@gmail.com",
-      icon: "images/Email.png"
+      svg: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>`
     },
     {
       method: "YouTube - @brassquake",
       url: "https://www.youtube.com/@Brassquake",
-      icon: "images/youtube.png"
+      svg: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>`
     },
     {
       method: "Instagram - @brassquake",
       url: "https://www.instagram.com/brassquake?igsh=OGw0cXkyOG1xamZ2",
-      icon: "images/instagram.png"
+      svg: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>`
     }
   ];
 
@@ -54,13 +55,12 @@ document.addEventListener("DOMContentLoaded", () => {
     for (const contact of contacts) {
       const isEmail = contact.url.startsWith("mailto:");
 
-      // The icon is decorative (the text beside it says the same thing), so its alt text is empty
       contactsList.insertAdjacentHTML("beforeend", `
         <li>
-          <img src="${contact.icon}" alt="">
+          <div class="svg-icon">${contact.svg}</div>
           ${isEmail
-            ? `<span>${contact.method}</span>`
-            : `<a href="${contact.url}" target="_blank" rel="noopener noreferrer" title="${contact.method}">${contact.method}</a>`
+            ? `<span>\${contact.method}</span>` 
+            : `<a href="\${contact.url}" target="_blank" rel="noopener noreferrer" title="${contact.method}">${contact.method}</a>`
           }
         </li>
       `);

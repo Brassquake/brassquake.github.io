@@ -19,10 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   ];
 
-  // Swapped out PNGs for clean, scalable inline SVGs that match your color scheme
   const contacts = [
     {
-      method: "Email: brassquakegw@gmail.com",
+      method: "brassquakegw@gmail.com",
       url: "mailto:brassquakegw@gmail.com",
       svg: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>`
     },
@@ -53,15 +52,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const contactsList = document.querySelector("#contacts-list");
   if (contactsList) {
     for (const contact of contacts) {
-      const isEmail = contact.url.startsWith("mailto:");
+      // Create a bulletproof HTML string for the text/link
+      let textElement = "";
+      
+      if (contact.url.startsWith("mailto:")) {
+        // Open email client in the same window
+        textElement = `<a href="${contact.url}">${contact.method}</a>`;
+      } else {
+        // Open social links in a new tab
+        textElement = `<a href="${contact.url}" target="_blank" rel="noopener noreferrer" title="${contact.method}">${contact.method}</a>`;
+      }
 
+      // Insert cleanly without complex nested logic
       contactsList.insertAdjacentHTML("beforeend", `
         <li>
           <div class="svg-icon">${contact.svg}</div>
-          ${isEmail
-            ? `<span>\${contact.method}</span>` 
-            : `<a href="\${contact.url}" target="_blank" rel="noopener noreferrer" title="${contact.method}">${contact.method}</a>`
-          }
+          ${textElement}
         </li>
       `);
     }

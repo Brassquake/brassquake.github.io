@@ -26,6 +26,7 @@
                 <li><a href="?page=members" onclick="changePage('page=members'); return false;">Members</a></li>
                 <li><a href="?page=performances" onclick="changePage('page=performances'); return false;">Performances</a></li>
                 <li><a href="?page=contact" onclick="changePage('page=contact'); return false;">Contact</a></li>
+                <li><a href="?page=memory-lane" onclick="changePage('page=memory-lane'); return false;">Memory Lane</a></li>
             </ul>
         </nav>
         <div class="logo-wrapper">
@@ -210,6 +211,35 @@
               <p style="text-align: center;"><strong>School:</strong> <span class="school-name">Dr. G.W. Williams Secondary School</span></p>
               <p style="text-align: center;"><strong>Location:</strong> Aurora, Ontario</p>
             </section>
+
+            <!-- Memory Lane Section -->
+            <section id="memory-lane" class="section hidden">
+                
+                <!-- Password Gateway -->
+                <div id="password-gate" class="password-container">
+                    <div class="pw-header">Password Protected</div>
+                    <p style="text-align: left; color: var(--text-muted); margin-bottom: 1rem;">To view this protected page, enter the password below:</p>
+                    <div class="password-form">
+                        <input type="password" id="memory-lane-password" placeholder="" onkeydown="if(event.key === 'Enter') checkMemoryLanePassword()">
+                        <button type="button" onclick="checkMemoryLanePassword()">SUBMIT</button>
+                    </div>
+                    <p id="password-error" style="color: #ff6b35; display: none; text-align: left; margin-top: 0.5rem; font-weight: 500;">Incorrect password. Please try again.</p>
+                </div>
+
+                <!-- Hidden Gallery -->
+                <div id="memory-lane-gallery" style="display: none;">
+                    <h2>Memory Lane</h2>
+                    <div class="about-content">
+                        <p>Welcome to Memory Lane! A collection of behind-the-scenes moments and memories from the Brassquake family.</p>
+                    </div>
+                    
+                    <div id="memory-lane-grid" class="memory-grid">
+                        <!-- Images will be dynamically inserted here by init.js -->
+                    </div>
+                </div>
+
+            </section>
+
         </div>
     </main>
 

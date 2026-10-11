@@ -341,6 +341,62 @@ function resetCarouselInterval() {
     startCarouselInterval();
 }
 
+/* ---------- Memory Lane ---------- */
+
+// Updated to include descriptions for each image
+const memoryLaneImages = [
+    { src: "images/WhatsApp Image 2026-10-10 at 5.20.46 PM (1).jpeg", description: "Placeholder description for memory one." },
+    { src: "images/WhatsApp Image 2026-10-10 at 5.20.46 PM.jpeg", description: "Placeholder description for memory two." },
+    { src: "images/WhatsApp Image 2026-10-10 at 5.11.52 PM (1).jpeg", description: "Placeholder description for memory three." },
+    { src: "images/WhatsApp Image 2026-10-10 at 5.11.52 PM.jpeg", description: "Placeholder description for memory four." },
+    { src: "images/WhatsApp Image 2026-10-10 at 5.14.42 PM (1).jpeg", description: "Placeholder description for memory five." },
+    { src: "images/WhatsApp Image 2026-10-10 at 5.14.42 PM.jpeg", description: "Placeholder description for memory six." },
+    { src: "images/WhatsApp Image 2026-10-10 at 5.14.43 PM.jpeg", description: "Placeholder description for memory seven." },
+    { src: "images/WhatsApp Image 2026-10-10 at 5.20.45 PM.jpeg", description: "Placeholder description for memory eight." }
+];
+
+function initMemoryLane() {
+    const grid = document.getElementById('memory-lane-grid');
+    if (!grid) return;
+
+    // Inject the photos and descriptions into the grid
+    memoryLaneImages.forEach((item, index) => {
+        grid.insertAdjacentHTML('beforeend', `
+            <div class="memory-item">
+                <div class="memory-img-wrapper">
+                    <img src="${item.src}" alt="Brassquake Memory ${index + 1}" loading="lazy" decoding="async">
+                </div>
+                <div class="memory-caption">${item.description}</div>
+            </div>
+        `);
+    });
+
+    // Check if the user already unlocked it this session
+    if (sessionStorage.getItem('memoryLaneUnlocked') === 'true') {
+        document.getElementById('password-gate').style.display = 'none';
+        document.getElementById('memory-lane-gallery').style.display = 'block';
+    }
+}
+
+function checkMemoryLanePassword() {
+    const input = document.getElementById('memory-lane-password');
+    const error = document.getElementById('password-error');
+    const gate = document.getElementById('password-gate');
+    const gallery = document.getElementById('memory-lane-gallery');
+
+    if (input.value === 'trenches') {
+        gate.style.display = 'none';
+        gallery.style.display = 'block';
+        input.value = ''; // Clear the field
+        error.style.display = 'none';
+        
+        // Save state so it stays unlocked during their visit
+        sessionStorage.setItem('memoryLaneUnlocked', 'true');
+    } else {
+        error.style.display = 'block';
+    }
+}
+
 /* ---------- Members ---------- */
 
 function makeCards() {
@@ -512,6 +568,7 @@ document.addEventListener('keydown', (e) => {
 /* ---------- Start-up ---------- */
 
 initHomeCarousel(); 
+initMemoryLane();
 makeCards();
 memberDetails();
 makePerformances();

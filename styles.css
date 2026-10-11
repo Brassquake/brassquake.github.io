@@ -521,8 +521,9 @@ h2::after {
 /* ---------- Cards (members and performances) ---------- */
 #members-grid,
 #performance-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 2rem;
     margin-top: 2.5rem;
     width: 100%;
@@ -530,6 +531,8 @@ h2::after {
 
 .member-card {
     position: relative;
+    flex: 1 1 280px;
+    max-width: 350px; /* Prevents the centered cards from stretching too wide */
     width: 100%;
     padding: 1.25rem;
     text-align: center;

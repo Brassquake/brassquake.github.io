@@ -288,6 +288,13 @@ function initHomeCarousel() {
 
     // Now uses 5 photos
     carouselPhotos = allPhotos.slice(0, 5);
+    
+    // PRELOAD FIX: Force the browser to download all 5 images instantly so they don't lag when swapped
+    carouselPhotos.forEach(photo => {
+        const preloadImg = new Image();
+        preloadImg.src = photo.file;
+    });
+
     currentSlide = 0;
 
     renderSlide(currentSlide);
@@ -321,7 +328,7 @@ function renderSlide(index) {
     const imgEl = document.getElementById('carousel-image');
     const capEl = document.getElementById('carousel-caption');
     
-    // Swap immediately (no fade effect)
+    // Swap immediately (no fade effect, preloading makes this instant)
     imgEl.src = photo.file;
     imgEl.alt = photo.title;
     
@@ -343,39 +350,60 @@ function resetCarouselInterval() {
 
 /* ---------- Memory Lane ---------- */
 
-// Updated to include descriptions for each image
-const memoryLaneImages = [
-    { src: "images/WhatsApp Image 2026-10-10 at 5.20.46 PM (1).jpeg", description: "Placeholder description for memory one." },
-    { src: "images/WhatsApp Image 2026-10-10 at 5.20.46 PM.jpeg", description: "Placeholder description for memory two." },
-    { src: "images/WhatsApp Image 2026-10-10 at 5.11.52 PM (1).jpeg", description: "Placeholder description for memory three." },
-    { src: "images/WhatsApp Image 2026-10-10 at 5.11.52 PM.jpeg", description: "Placeholder description for memory four." },
-    { src: "images/WhatsApp Image 2026-10-10 at 5.14.42 PM (1).jpeg", description: "Placeholder description for memory five." },
-    { src: "images/WhatsApp Image 2026-10-10 at 5.14.42 PM.jpeg", description: "Placeholder description for memory six." },
-    { src: "images/WhatsApp Image 2026-10-10 at 5.14.43 PM.jpeg", description: "Placeholder description for memory seven." },
-    { src: "images/WhatsApp Image 2026-10-10 at 5.20.45 PM.jpeg", description: "Placeholder description for memory eight." }
-];
-
 function initMemoryLane() {
     const grid = document.getElementById('memory-lane-grid');
     if (!grid) return;
-
-    // Inject the photos and descriptions into the grid
-    memoryLaneImages.forEach((item, index) => {
-        grid.insertAdjacentHTML('beforeend', `
-            <div class="memory-item">
-                <div class="memory-img-wrapper">
-                    <img src="${item.src}" alt="Brassquake Memory ${index + 1}" loading="lazy" decoding="async">
-                </div>
-                <div class="memory-caption">${item.description}</div>
-            </div>
-        `);
-    });
 
     // Check if the user already unlocked it this session
     if (sessionStorage.getItem('memoryLaneUnlocked') === 'true') {
         document.getElementById('password-gate').style.display = 'none';
         document.getElementById('memory-lane-gallery').style.display = 'block';
     }
+
+    let consecutiveMisses = 0;
+    const maxMisses = 10; // If it misses 10 numbers in a row, it assumes it reached the end of your folder.
+    const extensions = ['.jpg', '.jpeg', '.png', '.JPG', '.JPEG', '.PNG'];
+
+    function tryLoadImage(index, extIndex) {
+        // Stop searching if we haven't found a photo in the last 10 numbers
+        if (consecutiveMisses >= maxMisses) return; 
+
+        // If we tried every extension for this specific number and failed
+        if (extIndex >= extensions.length) {
+            consecutiveMisses++; // Count this as a skipped/missing number
+            tryLoadImage(index + 1, 0); // Move on to check the next number
+            return;
+        }
+
+        const imgSrc = `images/MemoryLane/${index}${extensions[extIndex]}`;
+        const img = new Image();
+
+        img.onload = function() {
+            consecutiveMisses = 0; // Reset the miss counter because we found a photo!
+            
+            // Inject it into the grid
+            grid.insertAdjacentHTML('beforeend', `
+                <div class="memory-item">
+                    <div class="memory-img-wrapper">
+                        <img src="${imgSrc}" alt="Brassquake Memory" loading="lazy" decoding="async">
+                    </div>
+                </div>
+            `);
+            
+            // Immediately start looking for the next number
+            tryLoadImage(index + 1, 0);
+        };
+
+        img.onerror = function() {
+            // That extension didn't exist, try the next extension (e.g., if .jpg fails, try .png)
+            tryLoadImage(index, extIndex + 1);
+        };
+
+        img.src = imgSrc;
+    }
+
+    // Start looking for image 1
+    tryLoadImage(1, 0);
 }
 
 function checkMemoryLanePassword() {
@@ -384,16 +412,22 @@ function checkMemoryLanePassword() {
     const gate = document.getElementById('password-gate');
     const gallery = document.getElementById('memory-lane-gallery');
 
-    if (input.value === 'trenches') {
-        gate.style.display = 'none';
-        gallery.style.display = 'block';
-        input.value = ''; // Clear the field
-        error.style.display = 'none';
+    try {
+        const typedPassword = input.value.trim().toLowerCase();
+        input.value = ''; 
         
-        // Save state so it stays unlocked during their visit
-        sessionStorage.setItem('memoryLaneUnlocked', 'true');
-    } else {
+        // 'trenches' encoded in base64 is 'dHJlbmNoZXM='
+        if (btoa(typedPassword) === 'dHJlbmNoZXM=') {
+            gate.style.display = 'none';
+            gallery.style.display = 'block';
+            error.style.display = 'none';
+            sessionStorage.setItem('memoryLaneUnlocked', 'true');
+        } else {
+            error.style.display = 'block';
+        }
+    } catch(e) {
         error.style.display = 'block';
+        input.value = ''; 
     }
 }
 
@@ -565,7 +599,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-/* ---------- Start-up ---------- */
+/* ---------- Start-up & Easter Egg ---------- */
 
 initHomeCarousel(); 
 initMemoryLane();
@@ -577,4 +611,28 @@ performanceDetails();
 document.addEventListener('DOMContentLoaded', () => {
     updatePage();
     window.scrollTo(0, 0);
+
+    // EASTER EGG: Click the Brassquake Logo image 5 times to reveal Memory Lane!
+    let secretClickCount = 0;
+    let secretClickTimer;
+    
+    // Target ONLY the image itself, not the wrapper/text
+    const logoImage = document.querySelector('.logo-image'); 
+    
+    if (logoImage) {
+        // We purposely DO NOT change the cursor here to keep it hidden
+        logoImage.addEventListener('click', (e) => {
+            e.stopPropagation(); // Prevents the click from doing anything else
+            secretClickCount++;
+            clearTimeout(secretClickTimer);
+            
+            if (secretClickCount === 5) {
+                changePage('page=memory-lane');
+                secretClickCount = 0; // Reset counter
+            } else {
+                // If they stop clicking for 1 second, reset the counter
+                secretClickTimer = setTimeout(() => secretClickCount = 0, 1000); 
+            }
+        });
+    }
 });

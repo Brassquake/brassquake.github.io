@@ -1609,3 +1609,19 @@ html {
         width: 100%;
     }
 }
+
+/* ---------- Dropdown Chevron Animation ---------- */
+.dropdown-chevron {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 6px;
+    margin-top: -3px; /* Optically aligns the arrow with the text */
+    transition: transform 0.3s var(--ease), color 0.2s ease;
+}
+
+/* Flips the arrow upside down when hovering over the menu item */
+.nav-dropdown:hover .dropdown-chevron,
+.nav-dropdown:focus-within .dropdown-chevron {
+    transform: rotate(180deg);
+    color: var(--gold-soft);
+}

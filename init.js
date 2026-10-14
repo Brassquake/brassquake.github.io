@@ -652,7 +652,6 @@ performanceDetails();
 
 document.addEventListener('DOMContentLoaded', () => {
     updatePage();
-    window.scrollTo(0, 0);
 
     // EASTER EGG: Click the Brassquake Logo image 5 times to reveal Memory Lane!
     let secretClickCount = 0;
@@ -674,4 +673,15 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+});
+
+// Wait until ALL images and content are completely finished loading
+window.addEventListener('load', () => {
+    // Now that the page is at its full height and the browser has placed the user, glide to the top
+    setTimeout(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }, 200);
 });

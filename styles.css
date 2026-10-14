@@ -393,6 +393,58 @@ header.nav-open #site-nav a {
     color: var(--gold);
 }
 
+/* Dropdown Menu CSS */
+.nav-dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: rgba(18, 10, 28, 0.98);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--line-gold);
+    border-radius: var(--radius-sm);
+    padding: 0.5rem;
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s var(--ease);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    z-index: 100;
+}
+
+.nav-dropdown:hover .dropdown-menu,
+.nav-dropdown:focus-within .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-menu a {
+    padding: 0.75rem 1rem !important;
+    font-size: 0.9rem !important;
+    justify-content: center;
+    border-radius: 8px !important;
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+.dropdown-menu a::after {
+    display: none !important;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu a:focus-visible {
+    background: rgba(255, 215, 0, 0.1);
+}
+
 @media (max-width: 820px) {
     #site-nav {
         top: 70px;
@@ -436,6 +488,24 @@ header.nav-open #site-nav a {
     #site-nav a:focus-visible::after,
     #site-nav a.active::after {
         transform: scaleY(1);
+    }
+    
+    /* Mobile dropdown styling */
+    .dropdown-menu {
+        position: static;
+        transform: none !important;
+        opacity: 1;
+        visibility: visible;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        padding: 0 0 0 1.5rem;
+        min-width: 100%;
+        display: none;
+    }
+    .nav-dropdown:hover .dropdown-menu,
+    .nav-dropdown:focus-within .dropdown-menu {
+        display: flex;
     }
 }
 
@@ -660,7 +730,7 @@ h2::after {
     padding: 2rem 0;
 }
 
-/* ---------- Search bar (sleek glassmorphism) ---------- */
+/* ---------- Search bar ---------- */
 .search-sort-container {
     display: flex;
     justify-content: center;
@@ -1365,6 +1435,65 @@ html {
     .carousel-arrow.right {
         right: 5px;
     }
+}
+
+/* ---------- Collaborations ---------- */
+.collab-list-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.collab-item {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--gold);
+    border-radius: var(--radius-sm);
+    padding: 1.5rem 2rem;
+    transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    text-align: left;
+}
+
+.collab-item:hover {
+    transform: translateX(5px);
+    background: rgba(255, 215, 0, 0.08);
+    border-color: rgba(255, 215, 0, 0.3);
+}
+
+.collab-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.collab-name {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    margin: 0;
+}
+
+.collab-type {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #1c1129;
+    background: var(--gradient-accent);
+    padding: 0.2rem 0.8rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.collab-desc {
+    color: var(--text-muted);
+    line-height: 1.6;
+    font-size: 1.1rem;
 }
 
 /* ---------- Memory Lane ---------- */

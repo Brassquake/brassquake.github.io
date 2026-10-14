@@ -24,7 +24,15 @@
                 <li><a href="?page=home" onclick="changePage('page=home'); return false;">Home</a></li>
                 <li><a href="?page=about" onclick="changePage('page=about'); return false;">About</a></li>
                 <li><a href="?page=members" onclick="changePage('page=members'); return false;">Members</a></li>
-                <li><a href="?page=performances" onclick="changePage('page=performances'); return false;">Performances</a></li>
+                
+                <!-- Dropdown for Performances / Collaborations -->
+                <li class="nav-dropdown">
+                    <a href="?page=performances" onclick="changePage('page=performances'); return false;">Performances</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="?page=collaborations" onclick="changePage('page=collaborations'); return false;">Collaborations</a></li>
+                    </ul>
+                </li>
+                
                 <li><a href="?page=contact" onclick="changePage('page=contact'); return false;">Contact</a></li>
             </ul>
         </nav>
@@ -68,7 +76,7 @@
                     <hr>
                     
                     <p><span class="school-name">Special thanks to the developers:</span></p>
-                    <div style="font-family: Eb Garamond, monospace; font-size: 1em;">
+                    <div style="font-family: Courier New, monospace; font-size: 1em;">
                         <p>
                             Brian Weng - Lead Developer<br>
                             Arvin Omidvar - Developer<br>
@@ -169,6 +177,18 @@
                 <!-- Performance details will be dynamically inserted here -->
             </section>
             
+            <!-- Collaborations Section -->
+            <section id="collaborations" class="section hidden">
+                <h2>Collaborations</h2>
+                <div class="about-content">
+                    <p>We are proud to share the stage and work closely with these amazing ensembles and organizations!</p>
+                </div>
+                
+                <div id="collaborations-list" class="collab-list-container">
+                    <!-- Dynamically populated by init.js -->
+                </div>
+            </section>
+
             <section id="contact" class="section hidden contact-section">
               <h2>Get in Touch</h2>
               <p style="text-align: center;">Interested in booking Brassquake for your event or want to learn more about our performances?</p>
@@ -229,7 +249,7 @@
                 <div id="memory-lane-gallery" style="display: none;">
                     <h2>Memory Lane</h2>
                     <div class="about-content">
-                        <p>You found the secret. The Brassquake family will be eternalized here.</p>
+                        <p>Welcome to Memory Lane! A collection of behind-the-scenes moments and memories from the Brassquake family.</p>
                     </div>
                     
                     <div id="memory-lane-grid" class="memory-grid">

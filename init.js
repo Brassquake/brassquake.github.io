@@ -229,6 +229,29 @@ let performances = [
     },
 ];
 
+let collaborations = [
+    {
+        name: "The Downbeat Dinos",
+        type: "Jazz Combo",
+        description: "A jazz combo from Dr. G.W. Williams Secondary School featuring two of our members, Arvin and Nancy! We frequently share the stage at community events, school functions, and concerts."
+    },
+    {
+        name: "Maze",
+        type: "Persian Ensemble",
+        description: "A  Persian music ensemble that was created by our trumpet player, Arvin! We have collaborated with this group on many occasions, performing after eachother at concerts and community events."
+    },
+    {
+        name: "The Chords of Care",
+        type: "Non-Profit Organization",
+        description: "We have collaborated with this amazing non-profit organization, bringing live music to a local senior home in Aurora!"
+    },
+    {
+        name: "Trombone Trombone Trombone Trombone",
+        type: "Trombone Quartet",
+        description: "An incredible trombone quartet from Dr. G.W. Williams Secondary School, being led by our trombone player, Brian!"
+    }
+];
+
 /* ---------- Helpers ---------- */
 
 function slugify(text) {
@@ -346,6 +369,25 @@ function startCarouselInterval() {
 function resetCarouselInterval() {
     clearInterval(carouselInterval);
     startCarouselInterval();
+}
+
+/* ---------- Collaborations ---------- */
+
+function initCollaborations() {
+    const list = document.getElementById('collaborations-list');
+    if (!list) return;
+
+    collaborations.forEach(collab => {
+        list.insertAdjacentHTML('beforeend', `
+            <div class="collab-item">
+                <div class="collab-header">
+                    <h3 class="collab-name">${collab.name}</h3>
+                    <span class="collab-type">${collab.type}</span>
+                </div>
+                <p class="collab-desc">${collab.description}</p>
+            </div>
+        `);
+    });
 }
 
 /* ---------- Memory Lane ---------- */
@@ -591,7 +633,6 @@ window.addEventListener('resize', () => {
     resizeTimeout = setTimeout(alignPerformanceText, 100);
 });
 
-// Allow enter key to trigger carousel clicks too
 document.addEventListener('keydown', (e) => {
     if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.member-card[role="link"], .carousel-content[role="button"]')) {
         e.preventDefault();
@@ -602,6 +643,7 @@ document.addEventListener('keydown', (e) => {
 /* ---------- Start-up & Easter Egg ---------- */
 
 initHomeCarousel(); 
+initCollaborations();
 initMemoryLane();
 makeCards();
 memberDetails();
@@ -616,21 +658,18 @@ document.addEventListener('DOMContentLoaded', () => {
     let secretClickCount = 0;
     let secretClickTimer;
     
-    // Target ONLY the image itself, not the wrapper/text
     const logoImage = document.querySelector('.logo-image'); 
     
     if (logoImage) {
-        // We purposely DO NOT change the cursor here to keep it hidden
         logoImage.addEventListener('click', (e) => {
-            e.stopPropagation(); // Prevents the click from doing anything else
+            e.stopPropagation(); 
             secretClickCount++;
             clearTimeout(secretClickTimer);
             
             if (secretClickCount === 5) {
                 changePage('page=memory-lane');
-                secretClickCount = 0; // Reset counter
+                secretClickCount = 0; 
             } else {
-                // If they stop clicking for 1 second, reset the counter
                 secretClickTimer = setTimeout(() => secretClickCount = 0, 1000); 
             }
         });

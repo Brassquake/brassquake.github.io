@@ -2,7 +2,7 @@
    Brassquake - styles.css
    ========================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&display=swap');
 
 /* ---------- Design tokens ---------- */
 :root {
@@ -29,9 +29,9 @@
 
     --ease: cubic-bezier(0.22, 0.8, 0.3, 1);
 
-    /* Clean, minimalistic typeface update */
-    --font-body: 'Inter', system-ui, -apple-system, sans-serif;
-    --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+    /* Elegant Serif Typeface */
+    --font-body: 'EB Garamond', serif;
+    --font-display: 'EB Garamond', serif;
 }
 
 /* ---------- Reset and base ---------- */
@@ -152,7 +152,7 @@ main {
 .captioned-image .caption {
     margin-top: 0.25rem;
     color: var(--text-muted);
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 500;
 }
 
@@ -230,7 +230,7 @@ header {
 }
 
 .subtitle {
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     font-weight: 500;
     color: var(--gold);
     letter-spacing: 0.15em;
@@ -240,7 +240,7 @@ header {
 }
 
 .subtitle.small {
-    font-size: 0.75rem;
+    font-size: 0.85rem;
 }
 
 /* ---------- Menu button ---------- */
@@ -348,7 +348,7 @@ header.nav-open #site-nav {
     padding: 0.9rem 1.5rem;
     color: var(--text);
     text-decoration: none;
-    font-size: 0.92rem;
+    font-size: 1.05rem;
     font-weight: 600;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -532,7 +532,7 @@ h2::after {
 .member-card {
     position: relative;
     flex: 1 1 280px;
-    max-width: 350px; /* Prevents the centered cards from stretching too wide */
+    max-width: 350px;
     width: 100%;
     padding: 1.25rem;
     text-align: center;
@@ -581,7 +581,7 @@ h2::after {
 
 .member-name {
     font-family: var(--font-display);
-    font-size: 1.45rem;
+    font-size: 1.6rem;
     font-weight: 700;
     letter-spacing: -0.02em;
     color: var(--gold);
@@ -589,7 +589,7 @@ h2::after {
 }
 
 .member-instrument {
-    font-size: 1.05rem;
+    font-size: 1.15rem;
     font-weight: 500;
     letter-spacing: 0.04em;
     color: var(--orange);
@@ -599,6 +599,7 @@ h2::after {
 .member-description {
     color: var(--text-muted);
     line-height: 1.65;
+    font-size: 1.05rem;
 }
 
 /* Performance cards */
@@ -646,6 +647,7 @@ h2::after {
     align-items: flex-start;
     text-align: left;
     color: var(--text-muted);
+    font-size: 1.05rem;
 }
 
 .no-results {
@@ -795,7 +797,7 @@ h2::after {
     padding: 0.65rem 0.95rem;
     border-radius: 10px;
     color: var(--text);
-    font-size: 0.92rem;
+    font-size: 1.05rem;
     font-weight: 500;
     cursor: pointer;
     transition: background 0.2s ease, color 0.2s ease, padding-left 0.2s ease;
@@ -876,6 +878,7 @@ h2::after {
     flex: 1;
     text-align: left;
     color: #e6dff0;
+    font-size: 1.1rem;
 }
 
 .member-detail-desc p + p {
@@ -889,6 +892,7 @@ h2::after {
 .performance-summary-text {
     margin-bottom: 2rem;
     color: var(--text-muted);
+    font-size: 1.1rem;
 }
 
 /* Performance media grid */
@@ -933,7 +937,7 @@ h2::after {
 .media-item h3 {
     color: var(--gold);
     font-family: var(--font-display);
-    font-size: 1.05rem;
+    font-size: 1.15rem;
     font-weight: 600;
     text-align: center;
 }
@@ -988,7 +992,7 @@ label {
     margin-bottom: 0.5rem;
     color: var(--gold);
     font-weight: 600;
-    font-size: 0.9rem;
+    font-size: 1rem;
     letter-spacing: 0.06em;
 }
 
@@ -997,7 +1001,7 @@ textarea {
     padding: 0.8rem 1rem;
     color: #fff;
     font-family: inherit;
-    font-size: 1rem;
+    font-size: 1.1rem;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 10px;
@@ -1081,11 +1085,13 @@ button[type="submit"]:disabled {
     font-weight: 600;
     color: var(--gold);
     margin-bottom: 0.4rem;
+    font-size: 1.1rem;
 }
 
 .faq-answer {
     color: var(--text-muted);
     line-height: 1.65;
+    font-size: 1.05rem;
 }
 
 .contact-info-list {
@@ -1138,7 +1144,7 @@ button[type="submit"]:disabled {
 .contact-info-list a,
 .contact-info-list span {
     color: var(--gold);
-    font-size: 1.05rem;
+    font-size: 1.15rem;
     font-weight: 500;
     line-height: 1;
 }
@@ -1159,13 +1165,13 @@ button[type="submit"]:disabled {
 .about-content {
     text-align: center;
     line-height: 1.8;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
 .school-name {
     color: var(--gold);
     font-weight: 700;
-    font-size: 1.15rem;
+    font-size: 1.25rem;
 }
 
 /* ---------- Footer ---------- */
@@ -1179,6 +1185,7 @@ footer {
 
 .footer-content {
     color: var(--text-muted);
+    font-size: 1.1rem;
 }
 
 /* ---------- Scrollbar ---------- */
@@ -1227,7 +1234,7 @@ html {
         max-width: 100%;
     }
     h2 {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
     .contact-grid {
         flex-direction: column;
@@ -1270,7 +1277,7 @@ html {
 /* ---------- Home Carousel ---------- */
 .carousel-container {
     position: relative;
-    width: 65%; /* Matches your original width="65%" */
+    width: 65%;
     max-width: none;
     margin: 1.5rem auto 0.5rem;
     display: flex;
@@ -1325,17 +1332,17 @@ html {
 }
 
 .carousel-arrow.left {
-    left: -60px; /* Pushed further left so it floats entirely outside the image */
+    left: -60px;
 }
 
 .carousel-arrow.right {
-    right: -60px; /* Pushed further right so it floats entirely outside the image */
+    right: -60px;
 }
 
 .carousel-caption {
     text-align: center;
     color: var(--text-muted);
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     margin-top: 0.5rem;
     margin-bottom: 2rem;
     font-style: italic;
@@ -1344,16 +1351,16 @@ html {
 
 @media (max-width: 900px) {
     .carousel-container {
-        width: 85%; /* Slightly wider on medium screens */
+        width: 85%;
     }
 }
 
 @media (max-width: 768px) {
     .carousel-container {
-        width: 95%; /* Maximum width on mobile devices */
+        width: 95%;
     }
     .carousel-arrow.left {
-        left: 5px; /* Bring arrows inside the frame on phones so they don't clip */
+        left: 5px;
     }
     .carousel-arrow.right {
         right: 5px;
@@ -1373,7 +1380,7 @@ html {
 
 .pw-header {
     font-family: var(--font-display);
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 700;
     color: var(--gold);
     margin-bottom: 0.5rem;
@@ -1391,7 +1398,7 @@ html {
     padding: 0.8rem 1rem;
     color: #fff;
     font-family: inherit;
-    font-size: 1rem;
+    font-size: 1.1rem;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 10px;
@@ -1459,7 +1466,7 @@ html {
 }
 
 .memory-caption {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: var(--text-muted);
     line-height: 1.5;
     text-align: left;
